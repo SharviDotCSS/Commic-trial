@@ -302,6 +302,13 @@
   height: auto;
 }
 
+.comic-icon{
+  max-width: 85px;
+  height: 85px;
+  align-items: center;
+  align-self: center;
+}
+
 /* Style the custom assets container */
 #customAssetsContent {
   display: grid;
@@ -343,12 +350,27 @@ input[type="file"] {
   display: none;
 }
 
-/* Hide SVGs, icons, and custom assets in the Images menu tab
-#imagesTab .comic-asset[data-asset-type="svg"],
-#imagesTab .comic-asset[data-asset-type="icon"],
-#imagesTab .comic-asset[data-asset-type="custom"] {
-  display: none;
-} */
+/* Style for all icons contents */
+
+
+#iconContent {
+  background-color: #e3e2e2;
+  display: grid;/* flex-wrap: wrap; Allow images to wrap to the next row */
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 10px;
+  margin: 20px; /* Add margin for spacing around the grid */
+  justify-content: center; /* Horizontally center items */
+    align-items: center; /* Vertically center items */
+
+}
+
+.icon-container {
+  flex: 0 0 calc(33.33% - 20px); /* Adjust the width based on your requirements */
+  margin-right: 20px; /* Adjust spacing between images */
+  justify-content: center; /* Horizontally center items */
+    align-items: center; /* Vertically center items */
+  
+}
 
 /* Style for the font selection container */
 .font-selection {

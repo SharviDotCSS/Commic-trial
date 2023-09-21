@@ -14,6 +14,7 @@ const redoBtn = document.getElementById('redo-btn');
 const addPageBtn = document.getElementById('add-page-btn');
 const deletePageBtn = document.getElementById('delete-page-btn');
 const previewBtn = document.getElementById('preview-btn');
+const saveBtn = document.getElementById('save-btn');
 // Get the asset library images
 const comicAssets = document.querySelectorAll(".comic-asset");
 //google-fonts
@@ -46,27 +47,27 @@ canvas.addEventListener("drop", handleDrop);
 // }
 
 function handleDragStart(event) {
-// For image assets
-const imageAssets = document.querySelectorAll('.comic-asset[data-asset-type="image"]');
-imageAssets.forEach((imgElement) => {
-  imgElement.addEventListener("dragstart", (event) => {
-    event.dataTransfer.setData("text/plain", event.target.src);
-    event.dataTransfer.setData("assetType", "image"); // Set the asset type to 'image'
-    // takeSnapshot(); // Save the current state after dropping the image
+  // For image assets
+  const imageAssets = document.querySelectorAll('.comic-asset[data-asset-type="image"]');
+  imageAssets.forEach((imgElement) => {
+    imgElement.addEventListener("dragstart", (event) => {
+      event.dataTransfer.setData("text/plain", event.target.src);
+      event.dataTransfer.setData("assetType", "image"); // Set the asset type to 'image'
+      // takeSnapshot(); // Save the current state after dropping the image
+    });
   });
-});
 
-// For SVG assets
-const svgAssets = document.querySelectorAll('.comic-asset[data-asset-type="svg"]');
-svgAssets.forEach((svgElement) => {
-  svgElement.addEventListener("dragstart", (event) => {
-    event.dataTransfer.setData("text/plain", event.target.src);
-    event.dataTransfer.setData("assetType", "svg"); // Set the asset type to 'svg'
-    // takeSnapshot(); // Save the current state after dropping the SVG
+  // For SVG assets
+  const svgAssets = document.querySelectorAll('.comic-asset[data-asset-type="svg"]');
+  svgAssets.forEach((svgElement) => {
+    svgElement.addEventListener("dragstart", (event) => {
+      event.dataTransfer.setData("text/plain", event.target.src);
+      event.dataTransfer.setData("assetType", "svg"); // Set the asset type to 'svg'
+      // takeSnapshot(); // Save the current state after dropping the SVG
+    });
   });
-});
 
-   }
+}
 
 function handleDragEnd(event) {
   // Clean up if needed
@@ -154,7 +155,7 @@ function drawAssetOnCanvas(imageUrl, x, y) {
       height: img.height, // Height of the image (you can adjust this as needed)
     };
     canvasDrawingCommands.push(command);
-    console.log("canvasDrawingCommands",canvasDrawingCommands);
+    console.log("canvasDrawingCommands", canvasDrawingCommands);
 
     // Save the current state after placing the image on the canvas
     // takeSnapshot();
@@ -347,6 +348,16 @@ deletePageBtn.addEventListener('click', () => {
   clearCanvas();
 });
 
+let imageDataUrl = '';
+saveBtn.addEventListener('click', () => {
+  // Get the data URL of the canvas content (PNG format by default)
+  imageDataUrl = canvas.toDataURL();
+  // Now, you have the image data URL in the 'imageDataUrl' variable
+  // You can send it to your project's database or use it as needed
+  console.log('Image Data URL:', imageDataUrl);
+  console.log("saved img");
+});
+
 // // Listen for changes in the font dropdown
 // fontDropdown.addEventListener('change', () => {
 //   const selectedFont = fontDropdown.value;
@@ -440,3 +451,59 @@ customAssetInput.addEventListener('change', handleCustomAssetUpload);
 // Initially hide SVGs and custom assets
 svgContent.style.display = 'none';
 customAssetsContent.style.display = 'none';
+
+
+
+
+
+
+//icon.js
+const iconsContainer = document.getElementById('iconContent');
+const apiKey = 'AXWFg3J6fammE65afkm3eGDkaRPOvP7iVg9FtXmatLftXYCJ';
+
+// Function to fetch icons from the Flaticon API
+async function fetchComicIcons() {
+  try {
+    const response = await fetch('https://api.flaticon.com/v2/items', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+      },
+    });
+    const data = await response.json();
+
+    // Filter icons to include only those with a "comic" tag or category
+    const comicIcons = data.icons.filter(icon => icon.tags.includes('comic'));
+
+    // Process the filtered icons and populate the icons container
+    populateIconsContainer(comicIcons);
+  } catch (error) {
+    console.error('Error fetching icons:', error);
+  }
+}
+
+// Function to populate the icons container with fetched icons
+function populateIconsContainer(icons) {
+  iconsContainer.innerHTML = ''; // Clear any existing icons
+
+  icons.forEach(icon => {
+    const iconElement = document.createElement('img');
+    iconElement.src = icon.raster_sizes[0].formats[0].preview_url;
+    iconElement.alt = icon.name;
+    iconElement.classList.add('comic-asset');
+    iconElement.dataset.assetType = 'icon';
+    iconElement.draggable = true;
+
+    // Add a click event listener to handle icon selection
+    iconElement.addEventListener('click', () => {
+      // Handle icon selection (e.g., add to canvas or insert into text)
+      handleIconSelection(icon);
+    });
+
+    // Append the icon to the icons container
+    iconsContainer.appendChild(iconElement);
+  });
+}
+
+// Call the function to fetch comic icons when your page loads
+window.addEventListener('load', fetchComicIcons);
