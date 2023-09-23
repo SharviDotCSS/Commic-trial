@@ -20,6 +20,8 @@ const comicAssets = document.querySelectorAll(".comic-asset");
 //google-fonts
 const fontDropdown = document.getElementById('font-family');
 const comicCanvas = document.getElementById('comic-canvas');
+// Capture the comic artwork from the canvas as a data URL
+const comicImageDataUrl = comicCanvas.toDataURL('image/png');
 
 const canvasDrawingCommands = []; // Array to store canvas drawing commands
 let currentCommandIndex = -1; // Index of the current drawing command
@@ -368,7 +370,14 @@ saveBtn.addEventListener('click', () => {
 initializeAddDialogue(dialogueText, context);
 // addDraggableTextToCanvas(canvas, context);
 
+// Add an event listener to the "Preview" button
+previewBtn.addEventListener('click', () => {
+  // Generate the comic image data URL (comicImageDataUrl) here
 
+  // Redirect to the preview page and pass the comic artwork data URL as a query parameter
+  const encodedComicDataUrl = encodeURIComponent(comicImageDataUrl);
+  window.location.href = `preview.html?comicDataUrl=${encodedComicDataUrl}`;
+});
 
 
 

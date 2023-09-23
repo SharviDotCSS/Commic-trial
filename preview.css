@@ -1,0 +1,43 @@
+/* preview.css */
+body {
+    background-color: #1e1e1e; /* Dark background color */
+    color: #ffffff; /* Text color */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .preview-container {
+    margin: 20px auto;
+    max-width: 80%;
+    background-color: #333; /* Dark container background color */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  #comic-preview {
+    max-width: 100%;
+  }
+  
+  .action-buttons {
+    margin-top: 20px;
+  }
+  
+  button {
+    background-color: #007acc; /* Button background color */
+    color: #ffffff; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #005d99; /* Button background color on hover */
+  }
+  
+  /* Adjust the styling of the buttons and other elements as needed */
+  
