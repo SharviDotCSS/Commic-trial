@@ -6,15 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comic Artwork Preview</title>
   <link rel="stylesheet" href="preview.css"> <!-- Add a separate CSS file for styles -->
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=650fe1def702ac001998f3a3&product=inline-share-buttons&source=platform" async="async"></script>
 </head>
 <body>
-  <div class="preview-container">
+  <!-- <div class="preview-container">
     <img id="comic-preview" src="" alt="Comic Artwork">
-  </div>
+  </div> -->
+
+  <h1>Comic preview</h1>
+    <div id="gallery"></div>
+    <div id="view-img"></div>
+
+  <div class="sharethis-inline-share-buttons"></div>
 
   <div class="action-buttons">
-    <button id="download-button"><img src="download-icon.png" alt="Download"> Download</button>
-    <button id="share-button"><img src="share-icon.png" alt="Share"> Share</button>
+    <button id="download-button"><i class="fi fi-rr-download"></i> Download</button>
+    <!-- <button id="share-button"><img src="share-icon.png" alt="Share"> Share</button> -->
   </div>
 
   <script src="preview.js"></script>
