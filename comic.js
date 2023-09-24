@@ -26,6 +26,20 @@ const comicImageDataUrl = comicCanvas.toDataURL('image/png');
 const canvasDrawingCommands = []; // Array to store canvas drawing commands
 let currentCommandIndex = -1; // Index of the current drawing command
 
+const setCanvasBackground = () => {
+  // setting whole canvas background to white, so the downloaded img background will be white
+  context.fillStyle = "#fff";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  // ctx.fillStyle = selectedColor; // setting fillstyle back to the selectedColor, it'll be the brush color
+}
+
+window.addEventListener("load", () => {
+  // setting canvas width/height.. offsetwidth/height returns viewable width/height of an element
+  // canvas.width = canvas.offsetWidth;
+  // canvas.height = canvas.offsetHeight;
+  setCanvasBackground();
+});
+
 
 // Add event listeners to the asset library images for 'dragstart', 'dragend', and 'dragover' events.
 comicAssets.forEach(asset => {
@@ -270,10 +284,92 @@ function takeSnapshot() {
 //   }
 // }
 
+//Working Undo function, without redo
+// function undo() {
+//   if (currentSnapshotIndex > 0) {
+//     // Decrement the current snapshot index
+//     currentSnapshotIndex--;
+
+//     // Clear the canvas
+//     clearCanvas();
+
+//     // Redraw all commands from the previous snapshot
+//     const previousSnapshot = canvasSnapshots[currentSnapshotIndex];
+
+//     for (const command of previousSnapshot) {
+//       if (command.type === 'image') {
+//         const img = new Image();
+//         img.src = command.src;
+//         img.onload = function () {
+//           context.drawImage(img, command.x, command.y, command.width, command.height);
+//         };
+//       } else if (command.type === 'svg') {
+//         const img = new Image();
+//         img.src = command.src;
+//         img.onload = function () {
+//           context.drawImage(img, command.x, command.y, command.width, command.height);
+//         };
+//       }
+//       // Handle other command types (text, shapes) if needed
+//     }
+
+//     console.log("Undo completed. Current snapshot index:", currentSnapshotIndex);
+//   } else {
+//     console.log("No commands to undo.");
+//   }
+// }
+
+
+//Uundo & redo: redo works
+// Array to store canvas snapshots for redo
+const redoSnapshots = [];
+let currentRedoIndex = -1;
+
+// // Function to handle redo
+function redo() {
+  if (currentRedoIndex < redoSnapshots.length - 1) {
+    // Increment the redo index
+    currentRedoIndex++;
+
+    // Clear the canvas
+    clearCanvas();
+
+    // Redraw all commands from the redo snapshot
+    const redoSnapshot = redoSnapshots[currentRedoIndex];
+
+    for (const command of redoSnapshot) {
+      if (command.type === 'image') {
+        const img = new Image();
+        img.src = command.src;
+        img.onload = function () {
+          context.drawImage(img, command.x, command.y, command.width, command.height);
+        };
+      } else if (command.type === 'svg') {
+        const img = new Image();
+        img.src = command.src;
+        img.onload = function () {
+          context.drawImage(img, command.x, command.y, command.width, command.height);
+        };
+      }
+      // Handle other command types (text, shapes) if needed
+    }
+
+    console.log("Redo completed. Current redo index:", currentRedoIndex);
+  } else {
+    console.log("No commands to redo.");
+  }
+}
+
+
+// // Function to handle undo
 function undo() {
   if (currentSnapshotIndex > 0) {
     // Decrement the current snapshot index
     currentSnapshotIndex--;
+
+    // Push the undone snapshot to redoSnapshots
+    const undoneSnapshot = canvasSnapshots[currentSnapshotIndex + 1];
+    redoSnapshots.push(undoneSnapshot);
 
     // Clear the canvas
     clearCanvas();
@@ -298,11 +394,15 @@ function undo() {
       // Handle other command types (text, shapes) if needed
     }
 
+    // Reset the redo index
+    currentRedoIndex = -1;
+
     console.log("Undo completed. Current snapshot index:", currentSnapshotIndex);
   } else {
     console.log("No commands to undo.");
   }
 }
+
 
 function restoreCanvas(commands, snapshotIndex) {
   // Clear the canvas
@@ -346,6 +446,10 @@ undoBtn.addEventListener('click', () => {
   undo(); // Call the undo function when the button is clicked
 });
 
+redoBtn.addEventListener('click', () => {
+  redo(); // Call the undo function when the button is clicked
+});
+
 deletePageBtn.addEventListener('click', () => {
   clearCanvas();
 });
@@ -370,15 +474,29 @@ saveBtn.addEventListener('click', () => {
 initializeAddDialogue(dialogueText, context);
 // addDraggableTextToCanvas(canvas, context);
 
+//Preview button
 // Add an event listener to the "Preview" button
+// previewBtn.addEventListener('click', () => {
+//   // Generate the comic image data URL (comicImageDataUrl) here
+
+//   // Redirect to the preview page and pass the comic artwork data URL as a query parameter
+//   const encodedComicDataUrl = encodeURIComponent(comicImageDataUrl);
+//   window.location.href = `preview.html?comicDataUrl=${encodedComicDataUrl}`;
+// });
+
+
+//Save in gallery
+// add event listener to the save button
 previewBtn.addEventListener('click', () => {
-  // Generate the comic image data URL (comicImageDataUrl) here
+  // get the image data from the canvas
+  const imageData = canvas.toDataURL();
 
-  // Redirect to the preview page and pass the comic artwork data URL as a query parameter
-  const encodedComicDataUrl = encodeURIComponent(comicImageDataUrl);
-  window.location.href = `preview.html?comicDataUrl=${encodedComicDataUrl}`;
+  // save the image data to local storage
+  localStorage.setItem('saved-artwork', imageData);
+
+  // open a new tab to display the saved artwork
+  window.open('preview.html');
 });
-
 
 
 
@@ -459,6 +577,7 @@ customAssetInput.addEventListener('change', handleCustomAssetUpload);
 
 // Initially hide SVGs and custom assets
 svgContent.style.display = 'none';
+iconContent.style.display = 'none';
 customAssetsContent.style.display = 'none';
 
 

@@ -15,8 +15,8 @@
       <div class="asset-library-tabs">
         <div class="tab active" data-tab="images" id="imagesTab">Images</div>
         <div class="tab" data-tab="svgs" id="svgTab">SVGs</div>
-        <div class="tab" data-tab="icons" id="iconTab">Icons</div>
-        <div class="tab" data-tab="shapes" id="shapesTab">Shapes</div>
+        <div class="tab" data-tab="icons" id="iconTab">Comic Icons</div>
+        <!-- <div class="tab" data-tab="shapes" id="shapesTab">Shapes</div> -->
         <div class="tab" data-tab="custom-assets" id="customAssetsTab">Custom Assets</div>
 
 
@@ -77,6 +77,7 @@
           <img src="character4.png" alt="Image 1" class="comic-asset" data-asset-type="image" draggable="true">
           <!-- Add more image assets here -->
         </div>
+        
         <!-- SVGs Tab -->
         <div class="tab-content" data-tab="svgs" id="svgContent">
           <img src="asset_svg\SVG1.svg" alt="SVG 1" class="comic-asset" data-asset-type="svg" draggable="true"
@@ -85,10 +86,12 @@
           <img src="svg3.svg" alt="SVG 3" class="comic-asset" data-asset-type="svg" draggable="true">
           <!-- Add more SVG assets here -->
         </div>
+        
         <!-- Icons Tab -->
         <div class="tab-content" data-tab="icons" id="iconContent">
           <img src="asset_icons\bam.png" alt="Icon 1" class="comic-icon" data-asset-type="icon" draggable="true">
-          <img src="asset_icons\chat-bubble.png" alt="Icon 2" class="comic-icon" data-asset-type="icon" draggable="true">
+          <img src="asset_icons\chat-bubble.png" alt="Icon 2" class="comic-icon" data-asset-type="icon"
+            draggable="true">
           <img src="asset_icons\comic (1).png" alt="Icon 3" class="comic-icon" data-asset-type="icon" draggable="true">
           <img src="asset_icons\comic (2).png" alt="Icon 4" class="comic-icon" data-asset-type="icon" draggable="true">
           <img src="asset_icons\comic (3).png" alt="Icon 5" class="comic-icon" data-asset-type="icon" draggable="true">
@@ -98,16 +101,21 @@
           <img src="asset_icons\comic (7).png" alt="Icon 9" class="comic-icon" data-asset-type="icon" draggable="true">
           <img src="asset_icons\comic (8).png" alt="Icon 10" class="comic-icon" data-asset-type="icon" draggable="true">
           <img src="asset_icons\hi.png" alt="Icon 11" class="comic-icon" data-asset-type="icon" draggable="true">
-          <img src="asset_icons\speech-bubble (1).png" alt="Icon 12" class="comic-icon" data-asset-type="icon" draggable="true">
-          <img src="asset_icons\speech-bubble (2).png" alt="Icon 13" class="comic-icon" data-asset-type="icon" draggable="true">
-          <img src="asset_icons\speech-bubble.png" alt="Icon 14" class="comic-icon" data-asset-type="icon" draggable="true">
+          <img src="asset_icons\speech-bubble (1).png" alt="Icon 12" class="comic-icon" data-asset-type="icon"
+            draggable="true">
+          <img src="asset_icons\speech-bubble (2).png" alt="Icon 13" class="comic-icon" data-asset-type="icon"
+            draggable="true">
+          <img src="asset_icons\speech-bubble.png" alt="Icon 14" class="comic-icon" data-asset-type="icon"
+            draggable="true">
           <img src="asset_icons\thinking.png" alt="Icon 15" class="comic-icon" data-asset-type="icon" draggable="true">
           <!-- Add more icon assets here -->
         </div>
+        
         <!-- Shapes Tab -->
-        <div class="tab-content" data-tab="shapes" id="shapesContent">
+        <!-- <div class="tab-content" data-tab="shapes" id="shapesContent"> -->
           <!-- Add shape assets here -->
-        </div>
+        <!-- </div> -->
+        
         <!-- Custom Assets Tab -->
         <div class="tab-content" data-tab="custom-assets" id="customAssetsContent" style="display: none;">
           <!-- Button to upload images -->
@@ -129,6 +137,18 @@
             <img src="custom_asset2.png" alt="Custom Asset 2" class="comic-asset" data-asset-type="custom"
               draggable="true">
           </div>
+          <div class="custom-asset">
+            <img src="custom_asset3.png" alt="Custom Asset 3" class="comic-asset" data-asset-type="custom"
+              draggable="true">
+          </div>
+          <div class="custom-asset">
+            <img src="custom_asset4.png" alt="Custom Asset 4" class="comic-asset" data-asset-type="custom"
+              draggable="true">
+          </div>
+          <div class="custom-asset">
+            <img src="custom_asset5.png" alt="Custom Asset 5" class="comic-asset" data-asset-type="custom"
+              draggable="true">
+          </div>
           <!-- Add more custom assets here -->
 
         </div>
@@ -137,25 +157,14 @@
 
       </div>
     </div>
+    
     <div class="canvas-editor">
-      <div class="canvas-container">
-        <!-- <div class="text-display" id="textDisplay"></div> -->
-        <canvas id="comic-canvas" width="1000" height="550"></canvas>
-      </div>
-      <div class="controls">
-        <button id="undo-btn"><b>Undo</b></button>
-        <button id="redo-btn"><b>Redo</b></button>
-        <button id="add-page-btn"><b>Add Page</b></button>
-        <button id="delete-page-btn"><b>Delete Page</b></button>
-        <button id="preview-btn"><b>Preview</b></button>
-        <button id="save-btn"><b>Save</b></button>
-        
-      </div>
+      <div class="top-bar">
       <div class="text-editor">
         <textarea id="dialogue-text" placeholder="Enter dialogue..."></textarea>
         <input type="number" id="font-size" placeholder="Font size" min="1" value="16">
         <input type="color" id="text-color" value="#000000">
-        
+
         <div class="font-selection">
           <!-- <label for="font-family">Choose a Font:</label> -->
           <select id="font-family">
@@ -182,9 +191,22 @@
           </select>
         </div>
         <button id="add-dialogue-btn"><b>Add Dialogue</b></button>
-
+      </div>
+    </div>
+      <div class="canvas-container">
+        <!-- <div class="text-display" id="textDisplay"></div> -->
+        <canvas id="comic-canvas" width="1000" height="550"></canvas>
+      </div>
+      <div class="controls">
+        <button id="undo-btn"><b>Undo</b></button>
+        <button id="redo-btn"><b>Redo</b></button>
+        <button id="add-page-btn"><b>Add Page</b></button>
+        <button id="delete-page-btn"><b>Delete Page</b></button>
+        <button id="preview-btn"><b>Preview</b></button>
+        <!-- <button id="save-btn"><b>Save</b></button> -->
 
       </div>
+      
     </div>
   </div>
   <script type="module" src="comic.js"></script>

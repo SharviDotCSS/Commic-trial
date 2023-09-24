@@ -87,7 +87,7 @@
    body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #000000;
     overflow: hidden;
     display:grid;
@@ -131,6 +131,14 @@
     background-color: #323232;
     border-radius: 5px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
   
   .canvas-container {
@@ -141,7 +149,8 @@
     margin-bottom: 10px; /* Reduce the margin to fit the adjusted text editor height */
     /* height: calc(100% - 150px); Adjust the canvas height to accommodate text editor */
     height: fit-content;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    margin-top: 4px;
   }
   
   #comic-canvas {
@@ -150,9 +159,9 @@
     max-height: 100%; /* Ensure the canvas fits inside the canvas container */
   }
   
-  .controls {
+   .controls {
     margin-bottom: 20px; /* Reduce the margin to bring the controls closer */
-    display: flex; /* Add display: flex to align the buttons horizontally */
+     display: flex; /*Add display: flex to align the buttons horizontally  */
   }
   
   .controls button {
@@ -163,7 +172,7 @@
     margin: 5 15px;
     cursor: pointer;
     border-radius: 4px;
-  }
+  } */
 /* previous colors */
   /* #redo-btn{
     background-color: rgb(255, 215, 113);
@@ -190,7 +199,9 @@
     background-color: rgb(255, 113, 205);
   } */
 
-  #redo-btn{
+
+/* good colors */
+  /* #redo-btn{
     background-color: #FFDC6C;
   }
 
@@ -209,11 +220,107 @@
   #delete-page-btn{
     background-color: #FF6A52;
     width: 150px;
-  }
+  } */
 
   /* #add-dialogue-btn{
     background-color: #DD94FF;
   } */
+
+  /* Style for buttons below the canvas */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.controls button {
+  color: #fff; /* Text color */
+  padding: 6px 16px; /* Padding for buttons */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.controls button:hover {
+  background-color: #FF2D00; /* Background color on hover */
+}
+
+/* Add different background colors for each button if needed */
+#undo-btn {
+  background-color: #3394d5; /* Blue */
+}
+
+#redo-btn {
+  background-color: #e4bb15; /* Yellow */
+}
+
+#add-page-btn {
+  background-color: #2bbe4d; /* Green */
+}
+
+#delete-page-btn {
+  background-color: #DC3545; /* Red */
+}
+
+#preview-btn {
+  background-color: #ec5635; /* Orange */
+}
+
+#save-btn {
+  background-color: #795548; /* Brown */
+}
+
+/* Adjust button sizes and spacing as needed */
+.controls button {
+  margin-right: 6px;
+  font-size: 16px;
+  min-width: 128px; /* Adjust button width */
+}
+
+/* If you want to add icons to the buttons, you can use font-awesome or other icon libraries. */
+
+
+  .canvas-editor {
+  flex: 3; /* Take up 3/4th of the container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #323232;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.text-editor {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+  /* Remove the fixed height to cover the full width */
+}
+
+/* Add the following styles to center-align text editor elements */
+.text-editor select,
+.text-editor input[type="number"],
+.text-editor input[type="color"],
+.text-editor textarea {
+  margin-right: 10px; /* Add some spacing between elements */
+}
 
   #add-dialogue-btn {
     background-color: #007BFF;
@@ -247,11 +354,20 @@
     background-color: #f8f8f8;
     padding: 8px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     margin-bottom: 10px;
-    height: 50px; /* Adjust the height as needed */
+    width: 100%;
+    /* Remove the fixed height to cover the full width */
   }
+
+  /* Add the following styles to center-align text editor elements */
+.text-editor select,
+.text-editor input[type="number"],
+.text-editor input[type="color"],
+.text-editor textarea {
+  margin-right: 10px; /* Add some spacing between elements */
+}
 
   .text-editor textarea,
 .text-editor input[type="number"]{
@@ -473,7 +589,7 @@ input[type="file"] {
   border: 1px solid #ccc; /* Add a border with your desired color */
   border-radius: 4px;
   background-color: #fff; /* Background color for the dropdown */
-  font-family: Arial, sans-serif; /* Default font for the dropdown */
+  font-family: "Roboto", sans-serif; /* Default font for the dropdown */
   color: #333; /* Text color */
   cursor: pointer;
 }
