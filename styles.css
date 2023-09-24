@@ -145,6 +145,7 @@
   }
   
   #comic-canvas {
+    background-color: #fff;
     cursor: move;
     max-height: 100%; /* Ensure the canvas fits inside the canvas container */
   }
@@ -210,19 +211,73 @@
     width: 150px;
   }
 
-  #add-dialogue-btn{
+  /* #add-dialogue-btn{
     background-color: #DD94FF;
+  } */
+
+  #add-dialogue-btn {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center; /* Center text horizontally */
+  line-height: 10px; /* Center text vertically within the button */
+  margin-left: 10px;
+  }
+
+  #add-dialogue-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  #font-family {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    flex: 1; /* Allow the select element to grow and take up available space */
   }
 
   .text-editor {
-    margin-bottom: 5px; /* Reduce the margin to bring the text editor closer */
-    align-self: center; /* Align the text editor to the top */
-    width: 90%; /* Make the text editor full-width within the container */
-    text-align:start; /* Center the textarea and button horizontally */
-      display: flex;
-      align-items: top; /* Center items vertically */
-    
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    height: 50px; /* Adjust the height as needed */
   }
+
+  .text-editor textarea,
+.text-editor input[type="number"]{
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px; /* Adjust the spacing between elements */
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+#text-color {
+  width: 30px; /* Set the width of the swatch */
+  height: 30px; /* Set the height of the swatch */
+  /* border: 1px solid #ddd; Add a border */
+  /* border-radius: 8px; Add rounded corners */
+  background-color: #000; /* Set the default color */
+  cursor: pointer; /* Add a pointer cursor */
+  padding: 0; /* Remove padding */
+  margin-right: 10px; /* Adjust spacing */
+}
+
+/* Change the swatch color when the input changes */
+#text-color:hover {
+  background-color: var(--color); /* Use the color from the input */
+}
   
   #dialogue-text {
     flex: 1; /* Take up remaining space */
@@ -230,11 +285,38 @@
   }
 
   .text-editor textarea {
-    width: 100%; /* Make the textarea full-width */
-    height: 60px; /* Adjust the height of the text editor */
-    resize: none;
-    padding: 5px;
+    height: 20px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    /* margin-bottom: 10px; */
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
   }
+
+  .input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  /* .input-group input[type="number"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 40px; /* Adjust as needed 
+  }
+
+  .input-group input[type="color"] {
+    padding: 0;
+    border: none;
+    height: 40px; /* Adjust as needed 
+    width: 40px; /* Adjust as needed 
+    border-radius: 5px;
+  } */
   
   .text-editor button {
     cursor: pointer;
