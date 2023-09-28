@@ -11,72 +11,10 @@ const content = document.getElementById('content');
 // Declare and initialize textElementsArray
 let textElementsArray = [];
 
-
-// export function initializeAddDialogue() {
-
-//     const dialogueText = document.getElementById('dialogue-text');//textInput
-//     const addDialogueBtn = document.getElementById('add-dialogue-btn');//addTextBtn
-
-//     // Event listener for the "Add Dialogue" button
-//     addDialogueBtn.addEventListener('click', () => {
-//         console.log('Add Dialogue button clicked');
-//         const text = dialogueText.value;
-//         // Populate textElementsArray with text elements
-//         textElementsArray.push({ text: text, x: 100, y: 100, font: "20px Arial", color: "black" });
-//         addDialogueToCanvas(text);
-//         console.log(dialogueText.value);
-//     });
-
-//     // Function to add dialogue to the canvas
-//     function addDialogueToCanvas(text) {
-//         // Logic to add the provided text as dialogue to the canvas
-//         // You should use the canvas and context variables from your main.js
-
-//         // For example:
-//         context.font = '48px Arial'; // Set the font size and type
-//         context.fillStyle = 'black'; // Set the text color
-//         context.fillText(text, 50, 50); // Draw the text at specified coordinates
-//         console.log("inside function addDialogueToCanvas");
-//     }
-// }
-
 export function initializeAddDialogue() {
     const dialogueText = document.getElementById('dialogue-text'); // textInput
     const addDialogueBtn = document.getElementById('add-dialogue-btn'); // addTextBtn
 
-    // Event listener for the "Add Dialogue" button
-    // addDialogueBtn.addEventListener('click', () => {
-    //     console.log('Add Dialogue button clicked');
-    //     const text = dialogueText.value;
-    //     // Populate textElementsArray with text elements
-    //     textElementsArray.push({ text: text, x: 100, y: 100, font: "20px Arial", color: "black" });
-    //     addDialogueToCanvas(text);
-    //     console.log(dialogueText.value);
-    // });
-
-    // addDialogueBtn.addEventListener('click', () => {
-    //     console.log('Add Dialogue button clicked');
-    //     const text = dialogueText.value;
-    //     const selectedFont = fontDropdown.value; // Get the selected font
-    
-    //     // Set the font property of the text element
-    //     textElementsArray.push({ text: text, x: 100, y: 100, font: selectedFont, color: "black" });
-    //     addDialogueToCanvas(text, selectedFont);
-    //     console.log(dialogueText.value);
-    //     drawCanvas(); // Call drawCanvas to update the canvas
-    // });
-
-    // Function to add dialogue to the canvas
-    // function addDialogueToCanvas(text) {
-    //     // Logic to add the provided text as dialogue to the canvas
-    //     // You should use the canvas and context variables from your main.js
-
-    //     // For example:
-    //     context.font = '48px Arial'; // Set the font size and type
-    //     context.fillStyle = 'black'; // Set the text color
-    //     context.fillText(text, 50, 50); // Draw the text at specified coordinates
-    //     console.log("inside function addDialogueToCanvas");
-    // }
 }
 
 function drawCanvas() {
@@ -101,33 +39,6 @@ export function addDialogueToCanvas(text, font = '48px Arial') {
     context.fillText(text, 50, 50); // Draw the text at specified coordinates
     console.log("inside function addDialogueToCanvas");
 }
-
-
-
-// Modify the event listener for the "Add Dialogue" button
-// Modify the event listener for the "Add Dialogue" button
-// addDialogueBtn.addEventListener('click', () => {
-//     console.log('Add Dialogue button clicked');
-//     const text = dialogueText.value;
-//     const selectedFont = fontDropdown.value; // Get the selected font
-
-//     // Set the font property of the text element
-//     textElementsArray.push({ text: text, x: 100, y: 100, font: selectedFont, color: "black" });
-//     addDialogueToCanvas(text, selectedFont);
-//     console.log(dialogueText.value);
-//     drawCanvas(); // Call drawCanvas to update the canvas
-// });
-
-
-
-
-
-// fontDropdown.addEventListener('change', () => {
-//     const selectedFont = fontDropdown.value;
-//     textDisplay.style.fontFamily = selectedFont; // Set the font based on the selected option
-//     console.log(selectedFont);
-
-// });
 
 // Function to fetch and populate Google Fonts in the dropdown
 function populateFontDropdown() {
