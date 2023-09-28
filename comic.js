@@ -327,15 +327,15 @@ deletePageBtn.addEventListener('click', () => {
   canvasImages.splice(0); // This will remove all elements from the array
 });
 
-let imageDataUrl = '';
-saveBtn.addEventListener('click', () => {
-  // Get the data URL of the canvas content (PNG format by default)
-  imageDataUrl = canvas.toDataURL();
-  // Now, you have the image data URL in the 'imageDataUrl' variable
-  // You can send it to your project's database or use it as needed
-  console.log('Image Data URL:', imageDataUrl);
-  console.log("saved img");
-});
+// let imageDataUrl = '';
+// saveBtn.addEventListener('click', () => {
+//   // Get the data URL of the canvas content (PNG format by default)
+//   imageDataUrl = canvas.toDataURL();
+//   // Now, you have the image data URL in the 'imageDataUrl' variable
+//   // You can send it to your project's database or use it as needed
+//   console.log('Image Data URL:', imageDataUrl);
+//   console.log("saved img");
+// });
 
 
 // Initialize the "Add Dialogue" functionality
