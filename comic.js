@@ -1,6 +1,6 @@
 //importing
 import { initializeAddDialogue, addDialogueToCanvas } from './AddDialogue.js';
-import { addDraggableTextToCanvas } from './AddDialogue.js';
+// import { addDraggableTextToCanvas } from './AddDialogue.js';
 // import { showTab } from './content.js';
 
 
@@ -22,6 +22,8 @@ const fontDropdown = document.getElementById('font-family');
 const comicCanvas = document.getElementById('comic-canvas');
 // Capture the comic artwork from the canvas as a data URL
 const comicImageDataUrl = comicCanvas.toDataURL('image/png');
+//for rearanging on canvas
+let beingdragged;
 
 const canvasDrawingCommands = []; // Array to store canvas drawing commands
 let currentCommandIndex = -1; // Index of the current drawing command
@@ -70,6 +72,8 @@ function handleDragStart(event) {
       event.dataTransfer.setData("text/plain", event.target.src);
       event.dataTransfer.setData("assetType", "image"); // Set the asset type to 'image'
       // takeSnapshot(); // Save the current state after dropping the image
+      beingdragged = event.target;
+      console.log(beingdragged);
     });
   });
 
@@ -173,6 +177,11 @@ function drawAssetOnCanvas(imageUrl, x, y) {
     canvasDrawingCommands.push(command);
     console.log("canvasDrawingCommands", canvasDrawingCommands);
 
+    // Add the image to the canvasImages array with draggable set to true
+    addImageToCanvasImages(img, x, y);
+    addResizableImageToCanvas(img, x, y)
+
+
     // Save the current state after placing the image on the canvas
     // takeSnapshot();
     console.log("img drawn");
@@ -250,39 +259,6 @@ function takeSnapshot() {
 //     }
 //   }
 
-// function undo() {
-//   if (currentCommandIndex >= 0) {
-//     // Remove the last drawing command
-//     canvasDrawingCommands.pop();
-//     clearCanvas(); // Clear the canvas
-
-//     // Redraw all commands except the undone one
-//     for (let i = 0; i < canvasDrawingCommands.length; i++) {
-//       const command = canvasDrawingCommands[i];
-//       if (command.type === 'image') {
-//         const img = new Image();
-//         img.src = command.src;
-//         img.onload = function () {
-//           context.drawImage(img, command.x, command.y, command.width, command.height);
-//         };
-//       } else if (command.type === 'text') {
-//         context.font = command.font;
-//         context.fillStyle = command.color;
-//         context.fillText(command.text, command.x, command.y);
-//       } else if (command.type === 'shape') {
-//         context.fillStyle = command.color;
-//         context.fillRect(command.x, command.y, command.width, command.height);
-//       }
-//     }
-
-//     // Decrement the current command index
-//     currentCommandIndex--;
-
-//     console.log("Undo completed. Current command index: ", currentCommandIndex);
-//   } else {
-//     console.log("No commands to undo.");
-//   }
-// }
 
 //Working Undo function, without redo
 // function undo() {
@@ -325,9 +301,10 @@ function takeSnapshot() {
 const redoSnapshots = [];
 let currentRedoIndex = -1;
 
-// // Function to handle redo
+// // Function to handle redo, kindda works
 function redo() {
   if (currentRedoIndex < redoSnapshots.length - 1) {
+    console.log("Before Redo: ", redoSnapshots);
     // Increment the redo index
     currentRedoIndex++;
 
@@ -353,6 +330,7 @@ function redo() {
       }
       // Handle other command types (text, shapes) if needed
     }
+    console.log("After Redo: ", redoSnapshots);
 
     console.log("Redo completed. Current redo index:", currentRedoIndex);
   } else {
@@ -360,16 +338,19 @@ function redo() {
   }
 }
 
-
-// // Function to handle undo
+// // Function to handle undo, working fine but not with redo
 function undo() {
   if (currentSnapshotIndex > 0) {
+    console.log("currentSnapshotIndex",currentSnapshotIndex);
     // Decrement the current snapshot index
     currentSnapshotIndex--;
+    console.log("currentSnapshotIndex--",currentSnapshotIndex);
 
     // Push the undone snapshot to redoSnapshots
     const undoneSnapshot = canvasSnapshots[currentSnapshotIndex + 1];
+    console.log("canvasSnapshots",canvasSnapshots);
     redoSnapshots.push(undoneSnapshot);
+    console.log("undoneSnapshot",undoneSnapshot);
 
     // Clear the canvas
     clearCanvas();
@@ -403,44 +384,43 @@ function undo() {
   }
 }
 
+// function restoreCanvas(commands, snapshotIndex) {
+//   // Clear the canvas
+//   context.clearRect(0, 0, canvas.width, canvas.height);
 
-function restoreCanvas(commands, snapshotIndex) {
-  // Clear the canvas
-  context.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Replay the drawing commands up to the desired snapshot
-  for (let i = 0; i <= snapshotIndex; i++) {
-    const command = commands[i];
-    if (command.type === 'image') {
-      const img = new Image();
-      img.src = command.src;
-      img.onload = function () {
-        context.drawImage(img, command.x, command.y, command.width, command.height);
-      };
-    } else if (command.type === 'text') {
-      context.font = command.font;
-      context.fillStyle = command.color;
-      context.fillText(command.text, command.x, command.y);
-    } else if (command.type === 'shape') {
-      context.fillStyle = command.color;
-      context.fillRect(command.x, command.y, command.width, command.height);
-    }
-  }
-}
+//   // Replay the drawing commands up to the desired snapshot
+//   for (let i = 0; i <= snapshotIndex; i++) {
+//     const command = commands[i];
+//     if (command.type === 'image') {
+//       const img = new Image();
+//       img.src = command.src;
+//       img.onload = function () {
+//         context.drawImage(img, command.x, command.y, command.width, command.height);
+//       };
+//     } else if (command.type === 'text') {
+//       context.font = command.font;
+//       context.fillStyle = command.color;
+//       context.fillText(command.text, command.x, command.y);
+//     } else if (command.type === 'shape') {
+//       context.fillStyle = command.color;
+//       context.fillRect(command.x, command.y, command.width, command.height);
+//     }
+//   }
+// }
 
 // When drawing an image, text, or shape, instead of directly drawing, add a command to the canvasDrawingCommands array
-function drawImage(imageUrl, x, y, width, height) {
-  const command = { type: 'image', src: imageUrl, x, y, width, height };
-  canvasDrawingCommands.push(command);
-  // Increment the current command index
-  currentCommandIndex++;
-  // Perform the actual drawing here as well
-  const img = new Image();
-  img.src = imageUrl;
-  img.onload = function () {
-    context.drawImage(img, x, y, width, height);
-  };
-}
+// function drawImage(imageUrl, x, y, width, height) {
+//   const command = { type: 'image', src: imageUrl, x, y, width, height };
+//   canvasDrawingCommands.push(command);
+//   // Increment the current command index
+//   currentCommandIndex++;
+//   // Perform the actual drawing here as well
+//   const img = new Image();
+//   img.src = imageUrl;
+//   img.onload = function () {
+//     context.drawImage(img, x, y, width, height);
+//   };
+// }
 
 undoBtn.addEventListener('click', () => {
   undo(); // Call the undo function when the button is clicked
@@ -497,6 +477,171 @@ previewBtn.addEventListener('click', () => {
   // open a new tab to display the saved artwork
   window.open('preview.html');
 });
+
+
+
+// Drag images -Draging works, but conflicting with resize()
+let isDragging = false;
+let selectedImage = null;
+let offsetX, offsetY;
+
+canvas.addEventListener('mousedown', (e) => {
+  const x = e.clientX - canvas.getBoundingClientRect().left;
+  const y = e.clientY - canvas.getBoundingClientRect().top;
+
+  // Check if the click occurred inside an image
+  for (const image of canvasImages) {
+    if (
+      x >= image.x &&
+      x <= image.x + image.width &&
+      y >= image.y &&
+      y <= image.y + image.height
+    ) {
+      isDragging = true;
+      selectedImage = image;
+      offsetX = x - image.x;
+      offsetY = y - image.y;
+      console.log("Clicked on image:", selectedImage); // Debugging
+      break;
+    }
+  }
+});
+
+canvas.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    const x = e.clientX - canvas.getBoundingClientRect().left;
+    const y = e.clientY - canvas.getBoundingClientRect().top;
+
+    selectedImage.x = x - offsetX;
+    selectedImage.y = y - offsetY;
+    console.log("Dragging image:", selectedImage); // Debugging
+
+    // Redraw the canvas
+    redrawCanvas();
+  }
+});
+
+canvas.addEventListener('mouseup', () => {
+  if (isDragging) {
+    isDragging = false;
+    console.log("Released image:", selectedImage); // Debugging
+  }
+});
+
+function redrawCanvas() {
+  // Clear the canvas
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Redraw all images with their new positions from the canvasImages array
+  for (const imageObject of canvasImages) {
+    context.drawImage(imageObject.element, imageObject.x, imageObject.y, imageObject.width, imageObject.height);
+    console.log(imageObject);
+  }
+}
+
+const canvasImages = []; // Array to store images placed on the canvas
+
+// Function to add an image to the canvasImages array with draggable property set to true
+function addImageToCanvasImages(image, x, y) {
+  canvasImages.push({
+    x: x,
+    y: y,
+    width: image.width,
+    height: image.height,
+    draggable: true,
+    element: image,
+  });
+  console.log("from function addImageToCanvasImages",canvasImages);
+}
+
+//For resizing img - adding conflict with rearrange()
+let isResizing = false;
+let resizingImage = null;
+let clickedCorner = null;
+let originalWidth, originalHeight;
+
+canvas.addEventListener('mousedown', (e) => {
+  const x = e.clientX - canvas.getBoundingClientRect().left;
+  const y = e.clientY - canvas.getBoundingClientRect().top;
+
+  // Check if the click occurred inside a resizable image
+  for (const image of canvasImages) {
+    if (
+      x >= image.x &&
+      x <= image.x + image.width &&
+      y >= image.y &&
+      y <= image.y + image.height
+    ) {
+      isResizing = true;
+      resizingImage = image;
+      
+      // Determine which corner was clicked
+      const centerX = image.x + image.width / 2;
+      const centerY = image.y + image.height / 2;
+      if (x < centerX && y < centerY) {
+        clickedCorner = 'top-left';
+      } else if (x < centerX && y >= centerY) {
+        clickedCorner = 'bottom-left';
+      } else if (x >= centerX && y < centerY) {
+        clickedCorner = 'top-right';
+      } else {
+        clickedCorner = 'bottom-right';
+      }
+      
+      // Store the original width and height
+      originalWidth = image.width;
+      originalHeight = image.height;
+      break;
+    }
+  }
+});
+
+canvas.addEventListener('mousemove', (e) => {
+  if (isResizing) {
+    const x = e.clientX - canvas.getBoundingClientRect().left;
+    const y = e.clientY - canvas.getBoundingClientRect().top;
+    
+    // Calculate new width and height based on mouse position
+    let newWidth = originalWidth;
+    let newHeight = originalHeight;
+    
+    if (clickedCorner.includes('left')) {
+      newWidth = originalWidth + (resizingImage.x - x);
+    } else {
+      newWidth = originalWidth + (x - (resizingImage.x + resizingImage.width));
+    }
+    
+    if (clickedCorner.includes('top')) {
+      newHeight = originalHeight + (resizingImage.y - y);
+    } else {
+      newHeight = originalHeight + (y - (resizingImage.y + resizingImage.height));
+    }
+    
+    // Update image dimensions
+    resizingImage.width = newWidth;
+    resizingImage.height = newHeight;
+    
+    // Redraw the canvas
+    redrawCanvas();
+  }
+});
+
+canvas.addEventListener('mouseup', () => {
+  if (isResizing) {
+    isResizing = false;
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -635,3 +780,67 @@ function populateIconsContainer(icons) {
 
 // Call the function to fetch comic icons when your page loads
 window.addEventListener('load', fetchComicIcons);
+
+
+// let originalWidth, originalHeight;
+
+// // Load an image onto the canvas (you can replace this with your image loading logic)
+// const image = new Image();
+// image.src = 'path_to_your_image.jpg';
+
+// image.onload = () => {
+//     canvas.width = image.width;
+//     canvas.height = image.height;
+//     context.drawImage(image, 0, 0, image.width, image.height);
+// };
+
+// canvas.addEventListener('mousedown', (e) => {
+//     const x = e.clientX - canvas.getBoundingClientRect().left;
+//     const y = e.clientY - canvas.getBoundingClientRect().top;
+
+//     // Check if the click occurred inside the image
+//     if (
+//         x >= 0 &&
+//         x <= canvas.width &&
+//         y >= 0 &&
+//         y <= canvas.height
+//     ) {
+//         isDragging = true;
+//         selectedImage = image;
+//         offsetX = x;
+//         offsetY = y;
+//         originalWidth = image.width;
+//         originalHeight = image.height;
+//     }
+// });
+
+// canvas.addEventListener('mousemove', (e) => {
+//     if (isDragging) {
+//         const x = e.clientX - canvas.getBoundingClientRect().left;
+//         const y = e.clientY - canvas.getBoundingClientRect().top;
+        
+//         const newWidth = originalWidth + (x - offsetX);
+//         const newHeight = originalHeight + (y - offsetY);
+
+//         context.clearRect(0, 0, canvas.width, canvas.height);
+//         context.drawImage(selectedImage, 0, 0, newWidth, newHeight);
+
+//         drawBoundingBox(x, y, newWidth, newHeight);
+//     }
+// });
+
+// canvas.addEventListener('mouseup', () => {
+//     if (isDragging) {
+//         isDragging = false;
+//     }
+// });
+
+// function drawBoundingBox(x, y, width, height) {
+//     context.strokeStyle = '#007bff';
+//     context.lineWidth = 2;
+//     context.setLineDash([5, 5]);
+//     context.strokeRect(x, y, width, height);
+// }
+
+
+
