@@ -1,0 +1,284 @@
+/* Reset some default browser styles */
+body, h1, h2, p, ul, li, form {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a dark background color */
+body {
+    background-color: #1a1a1a; 
+    color: #fff;
+    font-family: Arial, sans-serif;
+
+}
+
+/* Style the header with a navigation bar */
+header {
+    background-color: #333;
+    padding: 20px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #DD94FF; /* Change color on hover */
+}
+
+/* Style the hero section */
+#hero {
+    background-image: url('background_hero.png'); /* Replace with your image */
+    background-size: cover;
+    background-position: center;
+    height: 768px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content {
+    position: absolute;
+    top: 85px;
+    max-width: 700px;
+}
+
+.hero-content h1 {
+    text-decoration: #FFDC6C;
+    font-size: 58px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6b6b;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Style the primary and secondary buttons in the hero section */
+.cta-button.primary {
+    border: 2px;
+    border-color: #fff;
+    background-color: #5977ff;
+    margin-right: 10px;
+}
+
+.cta-button.secondary {
+    background-color: #333;
+}
+
+.cta-button:hover {
+    background-color: #718bff; /* Change color on hover */
+}
+
+/* Style the about and features sections */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.container h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.container p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#about {
+    background-image: url('about_background.png');
+    background-size: cover;
+    background-color: #222; /* Dark background color */
+    color: #fff; /* Text color */
+    padding: 30px 0; /* Add vertical padding for spacing */
+   
+
+    /* Center the text horizontally */
+    text-align: center;
+}
+
+#about h2 {
+    font-size: 36px; /* Larger font size for section headings */
+    margin-bottom: 20px;
+    color: #908DFF; /* Highlight color */
+}
+
+#about p {
+    text-align: Left;
+    font-size: 18px; /* Slightly larger font size for text */
+    line-height: 1.5; /* Improved readability with line height */
+    margin-bottom: 30px;
+}
+
+/* Add a border or divider for separation */
+#about .divider {
+    width: 100px;
+    height: 2px;
+    background-color: #ff6b6b;
+    margin: 0 auto 30px; /* Center and space it from the content */
+}
+
+#features {
+    background-image: url('features_background.png');
+    background-size: cover;
+    /* background-color: #222; Dark background color */
+    color: #fff; /* Text color */
+    padding: 60px 0; /* Add vertical padding for spacing */
+
+    /* Center the content horizontally */
+    text-align: center;
+}
+
+
+#features h2 {
+    font-size: 36px; /* Larger font size for section headings */
+    margin-bottom: 20px;
+    color: #5DE8BD; /* Highlight color */
+}
+
+/* Create a container for feature cards */
+#features .feature-container {
+    display: flex;
+    justify-content: space-between; /* Align cards horizontally with space between them */
+    flex-wrap: wrap; /* Wrap to the next row if needed */
+    gap: 20px; /* Spacing between feature cards */
+    margin-top: 30px; /* Top margin for spacing from section title */
+}
+
+/* Style individual feature cards */
+#features .feature {
+    background-color: #333; /* Feature card background color */
+    flex: 1; /* Each card takes an equal amount of space */
+    padding: 20px; /* Spacing inside each feature card */
+    border-radius: 5px;
+    text-align: left; /* Align text to the left within each card */
+}
+
+#features .feature h3 {
+    font-size: 24px; /* Feature title font size */
+    margin-top: 0px;
+    margin-bottom: 10px;
+    color: #5DE8BD; /* Highlight color */
+}
+
+#features .feature p {
+    font-size: 16px; /* Feature description font size */
+    line-height: 1.5; /* Improved readability with line height */
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    #features .feature-container {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+    }
+
+    #features .feature {
+        margin-bottom: 20px; /* Add space between stacked cards */
+    }
+}
+
+/* Style the contact section */
+#contact {
+    background-color: #222;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+#contact h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #FFDC6C;
+}
+
+.contact-info {
+    margin-bottom: 40px;
+}
+
+.contact-info p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.contact-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.contact-info ul li {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.social-media {
+    margin-bottom: 20px;
+}
+
+.social-media p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.social-media ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.social-media ul li {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.social-media ul li a {
+    color: #FFDC6C;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-media ul li a:hover {
+    color: #ff6b6b;
+}
+
+
+
+/* Style the footer */
+footer {
+    background-color: #333;
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+/* Add any additional styles and animations as needed */
