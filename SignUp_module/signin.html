@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="black-and-white">
+    
+        <div class="left-side">
+            <!-- Add your image here -->
+            <img src="Background.png" alt="Illustration" class="illustration">
+        </div>
+        <div class="right-side">
+            <h2>Join the Creative Community</h2>
+            <form id="signup-form" method="post" action="/signin">
+                <label for="username">Your Artistic Name:</label>
+                <input type="text" id="username" name="username" placeholder="e.g., ArtisticAlias" required>
+                <div class="error" id="username-error"></div>
+                
+                <label for="email">Your Creative Email:</label>
+                <input type="email" id="email" name="email" placeholder="e.g., you@creative.com" required>
+                <div class="error" id="email-error"></div>
+                
+                <label for="password">Create a Password:</label>
+                <input type="password" id="password" name="password" placeholder="At least 6 characters" required>
+                <div class="error" id="password-error"></div>
+                
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter your password" required>
+                <div class="error" id="confirm-password-error"></div>
+                
+                <button type="submit" class="cta-button" style="color: black;"><b>Join now</b></button>
+            </form>
+        </div>
+    
+    <script src="script.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
