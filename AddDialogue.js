@@ -170,7 +170,7 @@ addDialogueBtn.addEventListener('click', () => {
     updateCanvasTextProperties(selectedFont, fontSize, textColor);
 
     // Populate textElementsArray with text elements
-    textElementsArray.push({ text: text, x: 100, y: 100, font: selectedFont, fontSize: fontSize, color: textColor });
+    textElementsArray.push({ text: text, x: 50, y: 50, font: selectedFont, fontSize: fontSize, color: textColor });
     addDialogueToCanvas(text, selectedFont, fontSize, textColor);
     console.log(dialogueText.value);
     drawCanvas(); // Call drawCanvas to update the canvas
@@ -231,83 +231,83 @@ function updateCanvasTextProperties(font, fontSize, color) {
 
 
 // Function to add draggable text to the canvas
-export function addDraggableTextToCanvas(canvas, context) {
+// export function addDraggableTextToCanvas(canvas, context) {
 
 
-    // Variables to store text position and dragging state
-    let isDragging = false;
-    let initialX, initialY;
+//     // Variables to store text position and dragging state
+//     let isDragging = false;
+//     let initialX, initialY;
 
-    // Event listener for mouse down on the canvas
-    canvas.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        console.log("mousedown");
-        // Check if the mouse click is inside the text area
-        const mouseX = e.clientX - canvas.getBoundingClientRect().left;
-        const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+//     // Event listener for mouse down on the canvas
+//     canvas.addEventListener('mousedown', (e) => {
+//         isDragging = true;
+//         console.log("mousedown");
+//         // Check if the mouse click is inside the text area
+//         const mouseX = e.clientX - canvas.getBoundingClientRect().left;
+//         const mouseY = e.clientY - canvas.getBoundingClientRect().top;
 
-        // Replace these coordinates with the position of your text
-        const textX = 100;
-        const textY = 100;
-        const textWidth = context.measureText("Your Text").width;
-        const textHeight = 20; // Adjust as needed
+//         // Replace these coordinates with the position of your text
+//         const textX = 100;
+//         const textY = 100;
+//         const textWidth = context.measureText("Your Text").width;
+//         const textHeight = 20; // Adjust as needed
 
-        if (
-            mouseX >= textX &&
-            mouseX <= textX + textWidth &&
-            mouseY >= textY &&
-            mouseY <= textY + textHeight
-        ) {
-            isDragging = true;
-            initialX = mouseX - textX;
-            initialY = mouseY - textY;
-        }
-    });
+//         if (
+//             mouseX >= textX &&
+//             mouseX <= textX + textWidth &&
+//             mouseY >= textY &&
+//             mouseY <= textY + textHeight
+//         ) {
+//             isDragging = true;
+//             initialX = mouseX - textX;
+//             initialY = mouseY - textY;
+//         }
+//     });
 
     
-    // Event listener for mouse up on the canvas
-    canvas.addEventListener('mouseup', () => {
-        isDragging = false;
-        console.log("mouseup");
-    });
+//     // Event listener for mouse up on the canvas
+//     canvas.addEventListener('mouseup', () => {
+//         isDragging = false;
+//         console.log("mouseup");
+//     });
 
 
-    // Return any values or objects that need to be accessible from the main file
-}
+//     // Return any values or objects that need to be accessible from the main file
+// }
 
 
 
 // Event listener for mouse move on the canvas
-canvas.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-        console.log("text is dragabble");
-        const mouseX = e.clientX - canvas.getBoundingClientRect().left;
-        const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+// canvas.addEventListener('mousemove', (e) => {
+//     if (isDragging) {
+//         console.log("text is dragabble");
+//         const mouseX = e.clientX - canvas.getBoundingClientRect().left;
+//         const mouseY = e.clientY - canvas.getBoundingClientRect().top;
 
-        // Calculate the new position of the text
-        const newX = mouseX - initialX;
-        const newY = mouseY - initialY;
+//         // Calculate the new position of the text
+//         const newX = mouseX - initialX;
+//         const newY = mouseY - initialY;
 
-        console.log(`Text Position: x=${newX}, y=${newY}`);
-        console.log(`isDragging: ${isDragging}`);
+//         console.log(`Text Position: x=${newX}, y=${newY}`);
+//         console.log(`isDragging: ${isDragging}`);
 
-        // Update the x and y properties of the text element you want to move
-        // let indexToUpdate = -1; // Initialize with an invalid value
-        // textElementsArray[indexToUpdate].x = newX;
-        // textElementsArray[indexToUpdate].y = newY;
+//         // Update the x and y properties of the text element you want to move
+//         // let indexToUpdate = -1; // Initialize with an invalid value
+//         // textElementsArray[indexToUpdate].x = newX;
+//         // textElementsArray[indexToUpdate].y = newY;
 
-        console.log(textElementsArray);
+//         console.log(textElementsArray);
 
-        // Clear the canvas and redraw the text at the new position
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.fillText("Your Text", newX, newY);
+//         // Clear the canvas and redraw the text at the new position
+//         context.clearRect(0, 0, canvas.width, canvas.height);
+//         context.fillText("Your Text", newX, newY);
 
-        // Redraw the canvas with the updated text position
-        drawCanvas(textElementsArray,newX,newY);
-    }
-});
+//         // Redraw the canvas with the updated text position
+//         drawCanvas(textElementsArray,newX,newY);
+//     }
+// });
 
-// Modified event listener with { passive: true }
-canvas.addEventListener('mousewheel', (e) => {
-    // Your event handling code here
-}, { passive: true });
+// // Modified event listener with { passive: true }
+// canvas.addEventListener('mousewheel', (e) => {
+//     // Your event handling code here
+// }, { passive: true });
