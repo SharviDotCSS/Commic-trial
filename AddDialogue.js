@@ -141,84 +141,100 @@ function updateCanvasTextProperties(font, fontSize, color) {
 
 
 
-// Function to add draggable text to the canvas
-// export function addDraggableTextToCanvas(canvas, context) {
-
-
-//     // Variables to store text position and dragging state
-//     let isDragging = false;
-//     let initialX, initialY;
-
-//     // Event listener for mouse down on the canvas
-//     canvas.addEventListener('mousedown', (e) => {
-//         isDragging = true;
-//         console.log("mousedown");
-//         // Check if the mouse click is inside the text area
-//         const mouseX = e.clientX - canvas.getBoundingClientRect().left;
-//         const mouseY = e.clientY - canvas.getBoundingClientRect().top;
-
-//         // Replace these coordinates with the position of your text
-//         const textX = 100;
-//         const textY = 100;
-//         const textWidth = context.measureText("Your Text").width;
-//         const textHeight = 20; // Adjust as needed
-
-//         if (
-//             mouseX >= textX &&
-//             mouseX <= textX + textWidth &&
-//             mouseY >= textY &&
-//             mouseY <= textY + textHeight
-//         ) {
-//             isDragging = true;
-//             initialX = mouseX - textX;
-//             initialY = mouseY - textY;
-//         }
-//     });
-
-    
-//     // Event listener for mouse up on the canvas
-//     canvas.addEventListener('mouseup', () => {
-//         isDragging = false;
-//         console.log("mouseup");
-//     });
-
-
-//     // Return any values or objects that need to be accessible from the main file
-// }
 
 
 
-// Event listener for mouse move on the canvas
-// canvas.addEventListener('mousemove', (e) => {
-//     if (isDragging) {
-//         console.log("text is dragabble");
-//         const mouseX = e.clientX - canvas.getBoundingClientRect().left;
-//         const mouseY = e.clientY - canvas.getBoundingClientRect().top;
 
-//         // Calculate the new position of the text
-//         const newX = mouseX - initialX;
-//         const newY = mouseY - initialY;
 
-//         console.log(`Text Position: x=${newX}, y=${newY}`);
-//         console.log(`isDragging: ${isDragging}`);
 
-//         // Update the x and y properties of the text element you want to move
-//         // let indexToUpdate = -1; // Initialize with an invalid value
-//         // textElementsArray[indexToUpdate].x = newX;
-//         // textElementsArray[indexToUpdate].y = newY;
 
-//         console.log(textElementsArray);
 
-//         // Clear the canvas and redraw the text at the new position
-//         context.clearRect(0, 0, canvas.width, canvas.height);
-//         context.fillText("Your Text", newX, newY);
 
-//         // Redraw the canvas with the updated text position
-//         drawCanvas(textElementsArray,newX,newY);
+
+
+//Dragging
+// let isTextDragging = false;
+// let selectedText = null;
+// let textOffsetX, textOffsetY;
+
+// canvas.addEventListener('mousedown', (e) => {
+//     const x = e.clientX - canvas.getBoundingClientRect().left;
+//     const y = e.clientY - canvas.getBoundingClientRect().top;
+  
+//     // Check if the click occurred inside a text element
+//     for (const textElement of textElementsArray) {
+//       if (
+//         x >= textElement.x &&
+//         x <= textElement.x + textElement.width &&
+//         y >= textElement.y &&
+//         y <= textElement.y + textElement.height
+//       ) {
+//         isTextDragging = true;
+//         selectedText = textElement;
+//         textOffsetX = x - textElement.x;
+//         textOffsetY = y - textElement.y;
+//         break;
+//       }
 //     }
-// });
+//   });
+  
+//   canvas.addEventListener('mousemove', (e) => {
+//     if (isTextDragging && selectedText) {
+//       const x = e.clientX - canvas.getBoundingClientRect().left;
+//       const y = e.clientY - canvas.getBoundingClientRect().top;
+  
+//       selectedText.x = x - textOffsetX;
+//       selectedText.y = y - textOffsetY;
+  
+//       // Redraw the canvas
+//       redrawCanvas();
+//     }
+//   });
+  
+//   canvas.addEventListener('mouseup', () => {
+//     if (isTextDragging) {
+//       isTextDragging = false;
+//     }
+//   });
 
-// // Modified event listener with { passive: true }
-// canvas.addEventListener('mousewheel', (e) => {
-//     // Your event handling code here
-// }, { passive: true });
+//   function redrawCanvas() {
+//     // Clear the canvas
+//     context.clearRect(0, 0, canvas.width, canvas.height);
+  
+//     // Redraw all images with their new positions from the canvasImages array
+//     for (const imageObject of canvasImages) {
+//       context.drawImage(imageObject.element, imageObject.x, imageObject.y, imageObject.width, imageObject.height);
+//     }
+  
+//     // Redraw all text elements from the textElementsArray
+//     for (const textElement of textElementsArray) {
+//       context.font = textElement.font;
+//       context.fillStyle = textElement.color;
+//       context.fillText(textElement.text, textElement.x, textElement.y);
+//     }
+//   }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
