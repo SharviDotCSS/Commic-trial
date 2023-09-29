@@ -33,11 +33,19 @@ app.get('/style.css', (req, res) => {
   res.sendFile(__dirname + '/style.css');
 });
 
+// Serve an image with the correct MIME type
+app.get('/Background.png', (req, res) => {
+  res.header('Content-Type', 'image/png'); // Adjust the MIME type based on your image type (e.g., image/jpeg for JPEG images)
+  res.sendFile(__dirname + '/Background.png'); // Replace 'image.png' with the actual path to your image file
+});
+
+
 // Handle form submission to save data to the database
 app.post('/signin', (req, res) => {
   const { username, email, password, 'confirm-password': cpassword } = req.body;
 
   // Validate and save data to the database (add proper validation and hashing)
+  
   const sql = 'INSERT INTO user (username, email, password, cpassword) VALUES (?, ?, ?, ?)';
   db.query(sql, [ username, email, password, cpassword], (err, result) => {
     if (err) {
@@ -50,7 +58,7 @@ app.post('/signin', (req, res) => {
 });
 
 // Start the Express.js server
-const port = 2222;
+const port = 3030;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

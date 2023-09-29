@@ -533,12 +533,12 @@ function redrawCanvasWithBoundingBox(image) {
 
 //content.js
 const imagesTab = document.getElementById('imagesTab');
-const svgTab = document.getElementById('svgTab');
+// const svgTab = document.getElementById('svgTab');
 const iconTab = document.getElementById('iconTab');
 const customAssetsTab = document.getElementById('customAssetsTab'); // Get the custom assets tab
 
 const imagesContent = document.getElementById('imagesContent');
-const svgContent = document.getElementById('svgContent');
+// const svgContent = document.getElementById('svgContent');
 const iconContent = document.getElementById('iconContent');
 const customAssetsContent = document.getElementById('customAssetsContent');
 const customAssetInput = document.getElementById('customAssetInput');
@@ -572,28 +572,28 @@ function handleCustomAssetUpload(event) {
 // Add event listeners to the tabs
 imagesTab.addEventListener('click', () => {
   imagesContent.style.display = 'grid';
-  svgContent.style.display = 'none';
+  // svgContent.style.display = 'none';
   iconContent.style.display = 'none';
   customAssetsContent.style.display = 'none';
 });
 
-svgTab.addEventListener('click', () => {
-  imagesContent.style.display = 'none';
-  svgContent.style.display = 'grid';
-  iconContent.style.display = 'none';
-  customAssetsContent.style.display = 'none';
-});
+// svgTab.addEventListener('click', () => {
+//   imagesContent.style.display = 'none';
+//   svgContent.style.display = 'grid';
+//   iconContent.style.display = 'none';
+//   customAssetsContent.style.display = 'none';
+// });
 
 iconTab.addEventListener('click', () => {
   imagesContent.style.display = 'none';
-  svgContent.style.display = 'none';
+  // svgContent.style.display = 'none';
   iconContent.style.display = 'grid';
   customAssetsContent.style.display = 'none';
 });
 
 customAssetsTab.addEventListener('click', () => {
   imagesContent.style.display = 'none';
-  svgContent.style.display = 'none';
+  // svgContent.style.display = 'none';
   iconContent.style.display = 'none';
   customAssetsContent.style.display = 'grid';
 });
@@ -607,7 +607,7 @@ uploadButton.addEventListener('click', () => {
 customAssetInput.addEventListener('change', handleCustomAssetUpload);
 
 // Initially hide SVGs and custom assets
-svgContent.style.display = 'none';
+// svgContent.style.display = 'none';
 iconContent.style.display = 'none';
 customAssetsContent.style.display = 'none';
 
