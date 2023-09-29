@@ -1,232 +1,106 @@
-/* body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    overflow: hidden;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-  }
-  
-  .asset-library {
-    flex: 1; /* Take up 1/4th of the container 
-    max-height: calc(100vh - 80px); /* Set maximum height to fit within the viewport 
-    overflow-y: auto;
-    background-color: #f7f7f7;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .asset-library-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust image grid 
-    gap: 10px;
-    padding: 20px;
-  }
-  
-  .comic-asset {
-    width: 100%; /* Resize assets to fit container width 
-    height: auto;
-    cursor: pointer;
-  }
-  
-  .canvas-editor {
-    flex: 3; /* Take up 3/4th of the container 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .canvas-container {
-    position: relative;
-    border: 2px solid #ccc;
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-  
-  #comic-canvas {
-    cursor: move;
-  }
-  
-  .controls {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  
-  .controls button {
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  
-  .text-editor {
-    margin-bottom: 20px;
-  }
-  
-  .text-editor textarea {
-    width: 300px;
-    height: 100px;
-    resize: none;
-    margin-bottom: 10px;
-    padding: 5px;
-  }
-  
-  .text-editor button {
-    cursor: pointer;
-  }
-   */
+/* comic-editor stylesheet */
 
-   body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #000000;
-    overflow: hidden;
-    display:grid;
-  }
-  
-  .container {
-    border-radius: 3px;
-    display: flex;
-    justify-content: space-between;
-    
-  }
-  
-  .asset-library {
-    flex: 1; /* Take up 1/4th of the container */
-    max-height: calc(100vh - 0px); /* Set maximum height to fit within the viewport */
-    overflow-y: auto;
-    background-color: #323232;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* .asset-library-content {
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #000000;
+  overflow: hidden;
+  display: grid;
+}
+
+.container {
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.asset-library {
+  flex: 1;
+  /* Take up 1/4th of the container */
+  max-height: calc(100vh - 0px);
+  /* Set maximum height to fit within the viewport */
+  overflow-y: auto;
+  background-color: #323232;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* .asset-library-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust image grid 
     gap: 10px;
     padding: 20px;
   } */
-  
-  .comic-asset {
-    width: 100%; /* Resize assets to fit container width */
-    height: auto;
-    cursor: pointer;
-  }
-  
-  .canvas-editor {
-    flex: 3; /* Take up 3/4th of the container */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #323232;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
 
-  .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .canvas-container {
-    background-color: #fff;
-    position: relative;
-    border: 2px solid #ccc;
-    overflow: hidden;
-    margin-bottom: 10px; /* Reduce the margin to fit the adjusted text editor height */
-    /* height: calc(100% - 150px); Adjust the canvas height to accommodate text editor */
-    height: fit-content;
-    margin-bottom: 15px;
-    margin-top: 4px;
-  }
-  
-  #comic-canvas {
-    background-color: #fff;
-    cursor: move;
-    max-height: 100%; /* Ensure the canvas fits inside the canvas container */
-  }
-  
-   .controls {
-    margin-bottom: 20px; /* Reduce the margin to bring the controls closer */
-     display: flex; /*Add display: flex to align the buttons horizontally  */
-  }
-  
-  .controls button {
-    text-decoration-color: #1f1f1f;
-    height: 30px;
-    width: 80px;
-    margin-left: 30px;
-    margin: 5 15px;
-    cursor: pointer;
-    border-radius: 4px;
-  } */
-/* previous colors */
-  /* #redo-btn{
-    background-color: rgb(255, 215, 113);
-  }
+.comic-asset {
+  width: 100%;
+  /* Resize assets to fit container width */
+  height: auto;
+  cursor: pointer;
+}
 
-  #undo-btn{
-    background-color: rgb(113, 255, 219);
-  }
+.canvas-editor {
+  flex: 3;
+  /* Take up 3/4th of the container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #323232;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
 
-  #add-page-btn{
-    background-color: rgb(113, 189, 255);
-  }
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 
-  #preview-btn{
-    background-color: rgb(177, 113, 255);
-  }
+.canvas-container {
+  background-color: #fff;
+  position: relative;
+  border: 2px solid #ccc;
+  overflow: hidden;
+  margin-bottom: 10px;
+  /* Reduce the margin to fit the adjusted text editor height */
+  /* height: calc(100% - 150px); Adjust the canvas height to accommodate text editor */
+  height: fit-content;
+  margin-bottom: 15px;
+  margin-top: 4px;
+}
 
-  #delete-page-btn{
-    background-color: rgb(255, 160, 113);
-    width: 150px;
-  }
+#comic-canvas {
+  background-color: #fff;
+  cursor: move;
+  max-height: 100%;
+  /* Ensure the canvas fits inside the canvas container */
+}
 
-  #add-dialogue-btn{
-    background-color: rgb(255, 113, 205);
-  } */
+.controls {
+  margin-bottom: 20px;
+  /* Reduce the margin to bring the controls closer */
+  display: flex;
+  /*Add display: flex to align the buttons horizontally  */
+}
 
+.controls button {
+  text-decoration-color: #1f1f1f;
+  height: 30px;
+  width: 80px;
+  margin-left: 30px;
+  margin: 5 15px;
+  cursor: pointer;
+  border-radius: 4px;
+}
 
-/* good colors */
-  /* #redo-btn{
-    background-color: #FFDC6C;
-  }
+*/
 
-  #undo-btn{
-    background-color: #5DE8BD;
-  }
-
-  #add-page-btn{
-    background-color: #48CFF9;
-  }
-
-  #preview-btn{
-    background-color: #908DFF;
-  }
-
-  #delete-page-btn{
-    background-color: #FF6A52;
-    width: 150px;
-  } */
-
-  /* #add-dialogue-btn{
-    background-color: #DD94FF;
-  } */
-
-  /* Style for buttons below the canvas */
+/* Style for buttons below the canvas */
 .controls {
   display: flex;
   justify-content: space-between;
@@ -236,55 +110,64 @@
 }
 
 .controls button {
-  color: #fff; /* Text color */
-  padding: 6px 16px; /* Padding for buttons */
+  color: #fff;
+  /* Text color */
+  padding: 6px 16px;
+  /* Padding for buttons */
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Smooth background color transition */
+  transition: background-color 0.3s ease;
+  /* Smooth background color transition */
 }
 
 .controls button:hover {
-  background-color: #FF2D00; /* Background color on hover */
+  background-color: #FF2D00;
+  /* Background color on hover */
 }
 
 /* Add different background colors for each button if needed */
 #undo-btn {
-  background-color: #3394d5; /* Blue */
+  background-color: #3394d5;
+  /* Blue */
 }
 
 #redo-btn {
-  background-color: #e4bb15; /* Yellow */
+  background-color: #e4bb15;
+  /* Yellow */
 }
 
 #add-page-btn {
-  background-color: #2bbe4d; /* Green */
+  background-color: #2bbe4d;
+  /* Green */
 }
 
 #delete-page-btn {
-  background-color: #DC3545; /* Red */
+  background-color: #DC3545;
+  /* Red */
 }
 
 #preview-btn {
-  background-color: #ec5635; /* Orange */
+  background-color: #ec5635;
+  /* Orange */
 }
 
 #save-btn {
-  background-color: #795548; /* Brown */
+  background-color: #795548;
+  /* Brown */
 }
 
 /* Adjust button sizes and spacing as needed */
 .controls button {
   margin-right: 6px;
   font-size: 16px;
-  min-width: 128px; /* Adjust button width */
+  min-width: 128px;
+  /* Adjust button width */
 }
 
-/* If you want to add icons to the buttons, you can use font-awesome or other icon libraries. */
-
-
-  .canvas-editor {
-  flex: 3; /* Take up 3/4th of the container */
+.canvas-editor {
+  flex: 3;
+  /* Take up 3/4th of the container */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -319,126 +202,124 @@
 .text-editor input[type="number"],
 .text-editor input[type="color"],
 .text-editor textarea {
-  margin-right: 10px; /* Add some spacing between elements */
+  margin-right: 10px;
+  /* Add some spacing between elements */
 }
 
-  #add-dialogue-btn {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    text-align: center; /* Center text horizontally */
-  line-height: 10px; /* Center text vertically within the button */
+#add-dialogue-btn {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  /* Center text horizontally */
+  line-height: 10px;
+  /* Center text vertically within the button */
   margin-left: 10px;
-  }
+}
 
-  #add-dialogue-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  #font-family {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    flex: 1; /* Allow the select element to grow and take up available space */
-  }
+#add-dialogue-btn:hover {
+  background-color: #0056b3;
+}
 
-  .text-editor {
-    display: flex;
-    align-items: center;
-    background-color: #f8f8f8;
-    padding: 8px;
-    border: 1px solid #ddd;
-    /* border-radius: 5px; */
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    margin-bottom: 10px;
-    width: 100%;
-    /* Remove the fixed height to cover the full width */
-  }
+#font-family {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  flex: 1;
+  /* Allow the select element to grow and take up available space */
+}
 
-  /* Add the following styles to center-align text editor elements */
+.text-editor {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  padding: 8px;
+  border: 1px solid #ddd;
+  /* border-radius: 5px; */
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+  width: 100%;
+  /* Remove the fixed height to cover the full width */
+}
+
+/* Add the following styles to center-align text editor elements */
 .text-editor select,
 .text-editor input[type="number"],
 .text-editor input[type="color"],
 .text-editor textarea {
-  margin-right: 10px; /* Add some spacing between elements */
+  margin-right: 10px;
+  /* Add some spacing between elements */
 }
 
-  .text-editor textarea,
-.text-editor input[type="number"]{
+.text-editor textarea,
+.text-editor input[type="number"] {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-right: 10px; /* Adjust the spacing between elements */
+  margin-right: 10px;
+  /* Adjust the spacing between elements */
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 }
 
 #text-color {
-  width: 30px; /* Set the width of the swatch */
-  height: 30px; /* Set the height of the swatch */
+  width: 30px;
+  /* Set the width of the swatch */
+  height: 30px;
+  /* Set the height of the swatch */
   /* border: 1px solid #ddd; Add a border */
   /* border-radius: 8px; Add rounded corners */
-  background-color: #000; /* Set the default color */
-  cursor: pointer; /* Add a pointer cursor */
-  padding: 0; /* Remove padding */
-  margin-right: 10px; /* Adjust spacing */
+  background-color: #000;
+  /* Set the default color */
+  cursor: pointer;
+  /* Add a pointer cursor */
+  padding: 0;
+  /* Remove padding */
+  margin-right: 10px;
+  /* Adjust spacing */
 }
 
 /* Change the swatch color when the input changes */
 #text-color:hover {
-  background-color: var(--color); /* Use the color from the input */
+  background-color: var(--color);
+  /* Use the color from the input */
 }
-  
-  #dialogue-text {
-    flex: 1; /* Take up remaining space */
-    margin-right: 10px; /* Add spacing between textarea and button */
-  }
 
-  .text-editor textarea {
-    height: 20px;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    /* margin-bottom: 10px; */
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-  }
+#dialogue-text {
+  flex: 1;
+  /* Take up remaining space */
+  margin-right: 10px;
+  /* Add spacing between textarea and button */
+}
 
-  .input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
+.text-editor textarea {
+  height: 20px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /* margin-bottom: 10px; */
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
 
-  /* .input-group input[type="number"] {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    height: 40px; /* Adjust as needed 
-  }
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
 
-  .input-group input[type="color"] {
-    padding: 0;
-    border: none;
-    height: 40px; /* Adjust as needed 
-    width: 40px; /* Adjust as needed 
-    border-radius: 5px;
-  } */
-  
-  .text-editor button {
-    cursor: pointer;
-    height: 30px;
-    border-radius: 4px;
-  }
+.text-editor button {
+  cursor: pointer;
+  height: 30px;
+  border-radius: 4px;
+}
 
 /* Style tabs and tab contents */
 .asset-library-tabs {
@@ -446,8 +327,10 @@
   background-color: #f0f0f0;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
-  overflow-y: auto; /* Add a vertical scrollbar when needed */
-  max-height: 100px; /* Set a max height to control the scrollbar visibility */
+  overflow-y: auto;
+  /* Add a vertical scrollbar when needed */
+  max-height: 100px;
+  /* Set a max height to control the scrollbar visibility */
 }
 
 .tab {
@@ -459,17 +342,18 @@
   background-color: #fff;
 }
 
-#asset-library-content{
+#asset-library-content {
   display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust image grid */
-    gap: 10px;
-    padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  /* Adjust image grid */
+  gap: 10px;
+  padding: 20px;
 
 }
 
 .tab-content {
   display: none;
-} 
+}
 
 /* Show the active tab content */
 .tab-content.active {
@@ -481,7 +365,8 @@
 
 /* Style for all tab contents */
 .tab-content img {
-  max-width: 100%; /* Ensure images don't exceed the container width */
+  max-width: 100%;
+  /* Ensure images don't exceed the container width */
 }
 
 #imagesTab {
@@ -490,9 +375,11 @@
 }
 
 .image-container {
-  flex: 0 0 calc(33.33% - 20px); /* Adjust the width based on your requirements */
-  margin-right: 20px; /* Adjust spacing between images */
-  
+  flex: 0 0 calc(33.33% - 20px);
+  /* Adjust the width based on your requirements */
+  margin-right: 20px;
+  /* Adjust spacing between images */
+
 }
 
 .comic-asset {
@@ -500,7 +387,7 @@
   height: auto;
 }
 
-.comic-icon{
+.comic-icon {
   max-width: 85px;
   height: 85px;
   align-items: center;
@@ -510,17 +397,22 @@
 /* Style the custom assets container */
 #customAssetsContent {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 columns */
   gap: 10px;
-  margin: 20px; /* Add margin for spacing around the grid */
+  margin: 20px;
+  /* Add margin for spacing around the grid */
 }
 
 /* Style each custom asset */
 .custom-asset {
   text-align: center;
-  padding: 10px; /* Add padding around each asset */
-  border: 1px solid #ccc; /* Add a border for better separation */
-  background-color: #f9f9f9; /* Add a background color for clarity */
+  padding: 10px;
+  /* Add padding around each asset */
+  border: 1px solid #ccc;
+  /* Add a border for better separation */
+  background-color: #f9f9f9;
+  /* Add a background color for clarity */
 }
 
 .custom-asset img {
@@ -530,17 +422,23 @@
 
 /* Style the upload button */
 .upload-button {
-  background-color: #007bff; /* Button background color */
-  color: #fff; /* Button text color */
+  background-color: #007bff;
+  /* Button background color */
+  color: #fff;
+  /* Button text color */
   border: none;
-  padding: 10px 20px; /* Adjust padding as needed */
+  padding: 10px 20px;
+  /* Adjust padding as needed */
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Smooth hover effect */
-  width: 100%; /* Make the button full width */
+  transition: background-color 0.3s ease;
+  /* Smooth hover effect */
+  width: 100%;
+  /* Make the button full width */
 }
 
 .upload-button:hover {
-  background-color: #0056b3; /* Hover background color */
+  background-color: #0056b3;
+  /* Hover background color */
 }
 
 /* Remove default input styles */
@@ -553,50 +451,68 @@ input[type="file"] {
 
 #iconContent {
   background-color: #e3e2e2;
-  display: grid;/* flex-wrap: wrap; Allow images to wrap to the next row */
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  display: grid;
+  /* flex-wrap: wrap; Allow images to wrap to the next row */
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 columns */
   gap: 10px;
-  margin: 20px; /* Add margin for spacing around the grid */
-  justify-content: center; /* Horizontally center items */
-    align-items: center; /* Vertically center items */
+  margin: 20px;
+  /* Add margin for spacing around the grid */
+  justify-content: center;
+  /* Horizontally center items */
+  align-items: center;
+  /* Vertically center items */
+  padding-left: 30px;
 
 }
 
 .icon-container {
-  flex: 0 0 calc(33.33% - 20px); /* Adjust the width based on your requirements */
-  margin-right: 20px; /* Adjust spacing between images */
-  justify-content: center; /* Horizontally center items */
-    align-items: center; /* Vertically center items */
-  
+  flex: 0 0 calc(33.33% - 20px);
+  /* Adjust the width based on your requirements */
+  margin-right: 20px;
+  /* Adjust spacing between images */
+  justify-content: center;
+  /* Horizontally center items */
+  align-items: center;
+  /* Vertically center items */
+
 }
 
 /* Style for the font selection container */
 .font-selection {
   margin-left: 10px;
-  
+
 }
 
 /* Style for the label */
 .font-selection label {
   margin-right: 10px;
   font-weight: bold;
-  color: #ffffff; /* Adjust the color to match your theme */
+  color: #ffffff;
+  /* Adjust the color to match your theme */
 }
 
 /* Style for the font selection dropdown */
 .font-selection select {
   padding: 10px;
-  border: 1px solid #ccc; /* Add a border with your desired color */
+  border: 1px solid #ccc;
+  /* Add a border with your desired color */
   border-radius: 4px;
-  background-color: #fff; /* Background color for the dropdown */
-  font-family: "Roboto", sans-serif; /* Default font for the dropdown */
-  color: #333; /* Text color */
+  background-color: #fff;
+  /* Background color for the dropdown */
+  font-family: "Roboto", sans-serif;
+  /* Default font for the dropdown */
+  color: #333;
+  /* Text color */
   cursor: pointer;
 }
 
 /* Style for dropdown options */
 .font-selection select option {
-  font-family: inherit; /* Inherit the font family from the container */
-  color: #333; /* Text color */
-  background-color: #fff; /* Background color for options */
+  font-family: inherit;
+  /* Inherit the font family from the container */
+  color: #333;
+  /* Text color */
+  background-color: #fff;
+  /* Background color for options */
 }
