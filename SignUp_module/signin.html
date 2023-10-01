@@ -16,7 +16,7 @@
             <h2>Join the Creative Community</h2>
             <form id="signup-form" method="post" action="/signin">
                 <label for="username">Your Artistic Name:</label>
-                <input type="text" id="username" name="username" placeholder="e.g., ArtisticAlias" required>
+                <input type="text" id="username" name="username" placeholder="e.g., ArtisticAlias" pattern="[A-Za-z]+$" required>
                 <div class="error" id="username-error"></div>
                 
                 <label for="email">Your Creative Email:</label>
