@@ -1,4 +1,5 @@
 //main.js: Entry point to js
+//not using this file anymore!
 
 //importing
 import { initializeAddDialogue } from './AddDialogue.js';

@@ -39,6 +39,11 @@ app.get('/Background.png', (req, res) => {
   res.sendFile(__dirname + '/Background.png'); // Replace 'image.png' with the actual path to your image file
 });
 
+app.get('/script.js', (req, res) => {
+  res.header('Content-Type', 'application/javascript'); // Set the correct MIME type for JavaScript files
+  res.sendFile(__dirname + '/script.js'); // Adjust the file path based on your directory structure
+});
+
 
 // Handle form submission to save data to the database
 app.post('/signin', (req, res) => {
@@ -58,7 +63,7 @@ app.post('/signin', (req, res) => {
 });
 
 // Start the Express.js server
-const port = 3030;
+const port = 2000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
