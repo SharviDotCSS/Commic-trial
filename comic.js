@@ -1,5 +1,5 @@
 //importing
-import { initializeAddDialogue, addDialogueToCanvas } from './AddDialogue.js';
+// import { initializeAddDialogue, addDialogueToCanvas } from './AddDialogue.js';
 // import { addDraggableTextToCanvas } from './AddDialogue.js';
 // import { showTab } from './content.js';
 
@@ -11,7 +11,7 @@ const dialogueText = document.getElementById('dialogue-text');//textInput
 const addDialogueBtn = document.getElementById('add-dialogue-btn');//addTextBtn
 const undoBtn = document.getElementById('undo-btn');
 const redoBtn = document.getElementById('redo-btn');
-// const addPageBtn = document.getElementById('add-page-btn');
+// const removeBtn = document.getElementById('remove-btn');
 const deletePageBtn = document.getElementById('delete-page-btn');
 const previewBtn = document.getElementById('preview-btn');
 const saveBtn = document.getElementById('save-btn');
@@ -179,7 +179,7 @@ function drawAssetOnCanvas(imageUrl, x, y) {
 
     // Add the image to the canvasImages array with draggable set to true
     addImageToCanvasImages(img, x, y);
-    addResizableImageToCanvas(img, x, y)
+    // addResizableImageToCanvas(img, x, y);
 
 
     // Save the current state after placing the image on the canvas
@@ -232,18 +232,53 @@ const redoSnapshots = [];
 let currentRedoIndex = -1;
 
 // // Function to handle redo, kindda works
+// function redo() {
+//   if (currentRedoIndex < redoSnapshots.length) {
+//     console.log("Before Redo: ", redoSnapshots);
+//     // Increment the redo index
+//     currentRedoIndex++;
+
+//     // Clear the canvas
+//     clearCanvas();
+
+//     // Redraw all commands from the redo snapshot
+//     const redoSnapshot = redoSnapshots[currentRedoIndex];
+
+//     for (const command of redoSnapshot) {
+//       if (command.type === 'image') {
+//         const img = new Image();
+//         img.src = command.src;
+//         img.onload = function () {
+//           context.drawImage(img, command.x, command.y, command.width, command.height);
+//         };
+//       } else if (command.type === 'svg') {
+//         const img = new Image();
+//         img.src = command.src;
+//         img.onload = function () {
+//           context.drawImage(img, command.x, command.y, command.width, command.height);
+//         };
+//       }
+//       // Handle other command types (text, shapes) if needed
+//     }
+//     console.log("After Redo: ", redoSnapshots);
+
+//     console.log("Redo completed. Current redo index:", currentRedoIndex);
+//   } else {
+//     console.log("No commands to redo.");
+//   }
+// }
+
+//reversed redo()
+// Function to handle redo -- only 2 redo happens properyl!
 function redo() {
-  if (currentRedoIndex < redoSnapshots.length - 1) {
-    console.log("Before Redo: ", redoSnapshots);
-    // Increment the redo index
-    currentRedoIndex++;
+  if (redoSnapshots.length > 0) {
+    // Pop the last snapshot from redoSnapshots
+    const redoSnapshot = redoSnapshots.pop();
 
     // Clear the canvas
     clearCanvas();
 
     // Redraw all commands from the redo snapshot
-    const redoSnapshot = redoSnapshots[currentRedoIndex];
-
     for (const command of redoSnapshot) {
       if (command.type === 'image') {
         const img = new Image();
@@ -260,15 +295,18 @@ function redo() {
       }
       // Handle other command types (text, shapes) if needed
     }
-    console.log("After Redo: ", redoSnapshots);
 
-    console.log("Redo completed. Current redo index:", currentRedoIndex);
+    console.log("Redo completed. Remaining redo snapshots:", redoSnapshots.length);
   } else {
     console.log("No commands to redo.");
+    console.log(redoSnapshots);
+
   }
 }
 
-// // Function to handle undo, working fine but not with redo
+
+
+// // Function to handle undo, working fine but not with redo, just working good commented temp
 function undo() {
   if (currentSnapshotIndex > 0) {
     console.log("currentSnapshotIndex",currentSnapshotIndex);
@@ -477,7 +515,8 @@ canvas.addEventListener('mouseup', () => {
 canvas.addEventListener('mouseleave', () => {
   if (!isDragging && !isResizing) {
     // Remove the bounding box when the mouse leaves the canvas
-    redrawCanvas();
+    // redrawCanvas();
+    // console.log("mouse left");
   }
 });
 
@@ -501,9 +540,33 @@ canvas.addEventListener('click', (e) => {
 
   if (!isClickOnImage) {
     // Remove the bounding box when clicking outside an image
-    redrawCanvas();
+    // redrawCanvas();
+    redrawCanvasExceptBoundingBox();
   }
 });
+
+function redrawCanvasExceptBoundingBox() {
+  // Clear the canvas but leave the other elements intact
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Redraw all text elements
+  for (const textElement of textElementsArray) {
+    context.font = textElement.font;
+    context.fillStyle = textElement.color;
+    context.fillText(textElement.text, textElement.x, textElement.y);
+  }
+
+  // Redraw all images with their new positions from the canvasImages array
+  for (const imageObject of canvasImages) {
+    context.drawImage(
+      imageObject.element,
+      imageObject.x,
+      imageObject.y,
+      imageObject.width,
+      imageObject.height
+    );
+  }
+}
 
 function redrawCanvasWithBoundingBox(image) {
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -667,7 +730,218 @@ function populateIconsContainer(icons) {
 // Call the function to fetch comic icons when your page loads
 window.addEventListener('load', fetchComicIcons);
 
+//adddialogue.js
+const textDisplay = document.getElementById('text-display');
+const content = document.getElementById('content');
+
+// Declare and initialize textElementsArray
+let textElementsArray = [];
+
+// Declare textImage variable
+let textImage;
+
+function initializeAddDialogue() {
+    const dialogueText = document.getElementById('dialogue-text'); // textInput
+    const addDialogueBtn = document.getElementById('add-dialogue-btn'); // addTextBtn
+
+}
+
+// draws text as text not img
+// function drawCanvas() {
+//   // context.clearRect(0, 0, canvas.width, canvas.height);
+
+//   // Draw any text elements
+//   for (const textElement of textElementsArray) {
+//       context.font = textElement.font;
+//       context.fillStyle = textElement.color;
+//       context.fillText(textElement.text, textElement.x, textElement.y);
+//   }
+
+  
+// }
+
+// Function to add dialogue to the canvas as an image --> not drawing imgs (empty imgs)
+// function addDialogueToCanvas(text, font = '48px Arial', textColor = 'black') {
+//   // Create an offscreen canvas to render the text
+//   const offscreenCanvas = document.createElement('canvas');
+//   const offscreenContext = offscreenCanvas.getContext('2d');
+//   const x = 50; // X-coordinate
+//   const y = 50; // Y-coordinate
+  
+//   // Set the font and color on the offscreen context
+//   offscreenContext.font = font;
+//   offscreenContext.fillStyle = textColor;
+
+//   // Measure the text size
+//   const textMetrics = offscreenContext.measureText(text);
+//   const textWidth = textMetrics.width;
+//   const textHeight = parseInt(font, 10); // Convert font size to an integer for the text height
+  
+//   // Create an image from the offscreen canvas
+//   const textImage = new Image();
+
+//   // When the image is loaded, set the canvas size and draw the text
+//   textImage.onload = () => {
+//       // Set the canvas size to fit the loaded image
+//       offscreenCanvas.width = textImage.width;
+//       offscreenCanvas.height = textImage.height;
+
+//       // Draw the text on the offscreen canvas
+//       offscreenContext.drawImage(textImage, 0, 0);
+
+//       // Log the image data (URL)
+//       console.log("Image data:", textImage.src);
+
+//       // Now you have an image representation of the text
+//       // You can draw this image on the main canvas
+//       // context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+//       context.drawImage(textImage, 50, 50); // Adjust the position as needed
+//   };
+
+//   // Set the image source
+//   textImage.src = offscreenCanvas.toDataURL();
+
+//   console.log(`Offscreen canvas created: ${offscreenCanvas}`);
+//   console.log(`Offscreen canvas size set: ${offscreenCanvas.width} ${offscreenCanvas.height}`);
+//   console.log('Text drawn on offscreen canvas');
+
+//   // You can add this image to the canvasImages array
+// // addImageToCanvasImages(textImage, 50, 50);
+// addImageToCanvasImages(textImage,x, y);
+// console.log("Text img added to array");
+
+// }
+
+// Function to add dialogue to the canvas as an image
+function addDialogueToCanvas(text, font = '48px Arial', textColor = 'black') {
+  // Create an offscreen canvas to render the text
+  const offscreenCanvas = document.createElement('canvas');
+  const offscreenContext = offscreenCanvas.getContext('2d');
+  const x = 50; // X-coordinate
+  const y = 50; // Y-coordinate
+
+  // Set the font and color on the offscreen context
+  offscreenContext.font = font;
+  offscreenContext.fillStyle = textColor;
+
+  // Measure the text size
+  const textMetrics = offscreenContext.measureText(text);
+  const textWidth = textMetrics.width;
+  const textHeight = parseInt(font, 10); // Convert font size to an integer for the text height
+
+  // Create an image from the offscreen canvas
+  const textImage = new Image();
+
+  // When the image is loaded, set the canvas size and draw the text
+  textImage.onload = () => {
+    // Set the canvas size to fit the loaded image
+    offscreenCanvas.width = textImage.width;
+    offscreenCanvas.height = textImage.height;
+
+    // Draw the text on the offscreen canvas
+    offscreenContext.drawImage(textImage, 0, 0);
+
+    // Log the image data (URL)
+      console.log("Image data:", textImage.src);
+
+    // Now you have an image representation of the text
+    // You can add this image to the canvasImages array
+    addImageToCanvasImages(textImage, x, y, textImage.width, textImage.height);
+    console.log("Text img added to array");
+
+    // Draw the canvas with the new image
+    drawCanvas();
+  };
+
+  // Set the image source
+  textImage.src = offscreenCanvas.toDataURL();
+}
+
+// Function to draw the canvas including text images
+function drawCanvas() {
+  // Clear the canvas
+  // context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Redraw all images with their new positions from the canvasImages array
+  for (const imageObject of canvasImages) {
+    context.drawImage(imageObject.element, imageObject.x, imageObject.y, imageObject.width, imageObject.height);
+  }
+}
 
 
+// Function to fetch and populate Google Fonts in the dropdown
+function populateFontDropdown() {
+  fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBLWzHZ25t8e9odQPCq9F-XqDW4B1hj4Qc')
+      .then(response => response.json())
+      .then(data => {
+          const fonts = data.items;
+          fonts.forEach(font => {
+              const option = document.createElement('option');
+              option.value = font.family;
+              option.textContent = font.family;
+              fontDropdown.appendChild(option);
+          });
+      })
+      .catch(error => console.error('Error fetching fonts:', error));
+}
+
+// Event listener for page load
+window.addEventListener('load', () => {
+  // Call populateFontDropdown when the page loads
+  populateFontDropdown();
+});
+
+// Add this function to update the font of the text area
+function updateTextAreaFont(selectedFont) {
+  const dialogueText = document.getElementById('dialogue-text');
+  dialogueText.style.fontFamily = selectedFont;
+}
+
+// Modify the event listener for the "Add Dialogue" button --> working
+addDialogueBtn.addEventListener('click', () => {
+  console.log('Add Dialogue button clicked');
+  const text = dialogueText.value;
+  const selectedFont = fontDropdown.value; // Get the selected font
+  const fontSize = document.getElementById('font-size').value; // Get the font size
+  const textColor = document.getElementById('text-color').value; // Get the text color
+
+  // Update the canvas text properties
+  updateCanvasTextProperties(selectedFont, fontSize, textColor);
+
+  // Populate textElementsArray with text elements
+  textElementsArray.push({ text: text, x: 50, y: 50, font: selectedFont, fontSize: fontSize, color: textColor });
+  console.log(textElementsArray);
+  addDialogueToCanvas(textImage, selectedFont, fontSize, textColor);
+  console.log(dialogueText.value);
+  drawCanvas(); // Call drawCanvas to update the canvas
+});
+
+// Event listener for the font dropdown to update the text area font dynamically
+fontDropdown.addEventListener('change', () => {
+  const selectedFont = fontDropdown.value;
+  updateTextAreaFont(selectedFont);
+});
+
+// Event listener for the font size input to update the canvas text size dynamically
+document.getElementById('font-size').addEventListener('input', (event) => {
+  const selectedFont = fontDropdown.value;
+  const fontSize = event.target.value;
+  const textColor = document.getElementById('text-color').value;
+  updateCanvasTextProperties(selectedFont, fontSize, textColor);
+});
+
+// Event listener for the text color input to update the canvas text color dynamically
+document.getElementById('text-color').addEventListener('input', (event) => {
+  const selectedFont = fontDropdown.value;
+  const fontSize = document.getElementById('font-size').value;
+  const textColor = event.target.value;
+  updateCanvasTextProperties(selectedFont, fontSize, textColor);
+});
+
+// Add this function to update the font, font size, and text color of the canvas text
+function updateCanvasTextProperties(font, fontSize, color) {
+  context.font = `${fontSize}px ${font}`;
+  context.fillStyle = color;
+}
 
 
