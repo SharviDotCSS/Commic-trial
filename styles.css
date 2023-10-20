@@ -187,9 +187,10 @@ body {
 
 .text-editor {
   display: flex;
+  justify-content: center;
   align-items: center;
   background-color: #f8f8f8;
-  padding: 8px;
+  /* padding: 8px; */
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
@@ -201,8 +202,9 @@ body {
 .text-editor select,
 .text-editor input[type="number"],
 .text-editor input[type="color"],
-.text-editor textarea {
-  margin-right: 10px;
+.text-editor textarea, .text-editor img {
+  margin-right: 20px;
+  margin-left: 20px;
   /* Add some spacing between elements */
 }
 
@@ -252,13 +254,13 @@ body {
 .text-editor select,
 .text-editor input[type="number"],
 .text-editor input[type="color"],
-.text-editor textarea {
+.text-editor textarea, .text-editor img {
   margin-right: 10px;
   /* Add some spacing between elements */
 }
 
 .text-editor textarea,
-.text-editor input[type="number"] {
+.text-editor input[type="number"], .text-editor img {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -450,7 +452,7 @@ input[type="file"] {
 
 
 #iconContent {
-  background-color: #e3e2e2;
+  background-color: #ffffff;
   display: grid;
   /* flex-wrap: wrap; Allow images to wrap to the next row */
   grid-template-columns: repeat(2, 1fr);

@@ -730,6 +730,9 @@ function populateIconsContainer(icons) {
 // Call the function to fetch comic icons when your page loads
 window.addEventListener('load', fetchComicIcons);
 
+
+
+
 //adddialogue.js
 const textDisplay = document.getElementById('text-display');
 const content = document.getElementById('content');
@@ -746,7 +749,506 @@ function initializeAddDialogue() {
 
 }
 
-// draws text as text not img
+
+
+
+
+// Function to fetch and populate Google Fonts in the dropdown
+function populateFontDropdown() {
+  fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBLWzHZ25t8e9odQPCq9F-XqDW4B1hj4Qc')
+      .then(response => response.json())
+      .then(data => {
+          const fonts = data.items;
+          fonts.forEach(font => {
+              const option = document.createElement('option');
+              option.value = font.family;
+              option.textContent = font.family;
+              fontDropdown.appendChild(option);
+          });
+      })
+      .catch(error => console.error('Error fetching fonts:', error));
+}
+
+// // Event listener for page load
+window.addEventListener('load', () => {
+  // Call populateFontDropdown when the page loads
+  populateFontDropdown();
+});
+
+// Add this function to update the font of the text area
+function updateTextAreaFont(selectedFont) {
+  const dialogueText = document.getElementById('dialogue-text');
+  dialogueText.style.fontFamily = selectedFont;
+}
+
+// Modify the event listener for the "Add Dialogue" button --> working-- now
+addDialogueBtn.addEventListener('click', () => {
+  console.log('Add Dialogue button clicked');
+  const text = dialogueText.value;
+  const selectedFont = fontDropdown.value; // Get the selected font
+  const fontSize = document.getElementById('font-size').value; // Get the font size
+  const textColor = document.getElementById('text-color').value; // Get the text color
+
+  // Update the canvas text properties
+  updateCanvasTextProperties(selectedFont, fontSize, textColor);
+
+  // Populate textElementsArray with text elements
+  textElementsArray.push({ text: text, x: 50, y: 50, font: selectedFont, fontSize: fontSize, color: textColor });
+  console.log(textElementsArray);
+  addDialogueToCanvas(textImage, selectedFont, fontSize, textColor);
+  console.log(dialogueText.value);
+  drawCanvas(); // Call drawCanvas to update the canvas
+});
+
+// Event listener for the font dropdown to update the text area font dynamically
+fontDropdown.addEventListener('change', () => {
+  const selectedFont = fontDropdown.value;
+  updateTextAreaFont(selectedFont);
+});
+
+// Event listener for the font size input to update the canvas text size dynamically
+document.getElementById('font-size').addEventListener('input', (event) => {
+  const selectedFont = fontDropdown.value;
+  const fontSize = event.target.value;
+  const textColor = document.getElementById('text-color').value;
+  updateCanvasTextProperties(selectedFont, fontSize, textColor);
+});
+
+// Event listener for the text color input to update the canvas text color dynamically
+document.getElementById('text-color').addEventListener('input', (event) => {
+  const selectedFont = fontDropdown.value;
+  const fontSize = document.getElementById('font-size').value;
+  const textColor = event.target.value;
+  updateCanvasTextProperties(selectedFont, fontSize, textColor);
+});
+
+// Add this function to update the font, font size, and text color of the canvas text
+function updateCanvasTextProperties(font, fontSize, color) {
+  context.font = `${fontSize}px ${font}`;
+  context.fillStyle = color;
+}
+
+
+
+
+
+
+// Declare an array to store text elements -- in use
+const textElements = [];
+let currentX, currentY;
+
+// Get a reference to your text icon element
+const textIcon = document.getElementById('text-icon');
+let iconClicked = false; // Initialize the flag
+textIcon.addEventListener('click', function () {
+  iconClicked = true; // Set the flag to true when the icon is clicked
+});
+
+canvas.addEventListener('click', function (event) {
+  if (iconClicked) { // Check if the icon has been clicked
+  // Get the mouse coordinates relative to the canvas
+  const rect = canvas.getBoundingClientRect();
+  currentX = event.clientX - rect.left;
+  currentY = event.clientY - rect.top;
+
+  // Create a text input element dynamically
+  const textBox = document.createElement('input');
+  textBox.type = 'text';
+  textBox.style.position = 'absolute';
+  textBox.style.left = currentX + 'px';
+  textBox.style.top = currentY + 'px';
+  textBox.id = 'dialogue-text'; // Assign an id
+  textBox.placeholder = 'Enter text...';
+
+  // Retrieve user-selected font, font size, and text color
+  const selectedFont = document.getElementById('font-family').value;
+  const fontSize = document.getElementById('font-size').value;
+  const textColor = document.getElementById('text-color').value;
+
+  // Set the font, font size, and text color to the text box
+  textBox.style.fontFamily = selectedFont;
+  textBox.style.fontSize = fontSize + 'px';
+  textBox.style.color = textColor;
+
+  // Append the text box to the body
+  document.body.appendChild(textBox);
+
+  // Focus on the text box
+  textBox.focus();
+
+  // Add an event listener for the text box to handle adding text to the canvas
+  textBox.addEventListener('blur', function () {
+    addDialogueToCanvas(textBox.value, currentX, currentY, selectedFont, fontSize, textColor);
+    // Hide the text box when it loses focus
+    textBox.style.display = 'none';
+  });
+}});
+
+function drawCanvas() {
+  // Clear the canvas
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Redraw all text elements on the canvas
+  for (const textElement of textElements) {
+    context.font = textElement.font;
+    context.fillStyle = textElement.color;
+    context.fillText(textElement.text, textElement.x, textElement.y);
+  }
+}
+
+function addDialogueToCanvas(text, x, y, font, fontSize, textColor) {
+  // Create a text element object
+  const textElement = {
+    text: text,
+    font: fontSize + 'px ' + font,
+    color: textColor,
+    x: x,
+    y: y,
+  };
+
+  // Push the text element to the textElements array
+  textElements.push(textElement);
+
+  // Redraw the canvas with the new text element
+  drawCanvas();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//not in use code
+// function drawCanvas() {
+//   // Clear the canvas
+//   context.clearRect(0, 0, canvas.width, canvas.height);
+
+//   // Redraw all images with their new positions from the canvasImages array
+//   for (const imageObject of canvasImages) {
+//     context.drawImage(imageObject.element, imageObject.x, imageObject.y, imageObject.width, imageObject.height);
+//   }
+
+//   // Draw the text elements on the canvas
+//   for (const textElement of textElements) {
+//     context.font = textElement.font;
+//     context.fillStyle = textElement.color;
+//     context.fillText(textElement.text, textElement.x, textElement.y);
+//   }
+// }
+
+// function addDialogueToCanvas(text, x, y, font, fontSize, textColor) {
+//   // Create a text element object
+//   const textElement = {
+//     text: text,
+//     font: fontSize + 'px ' + font,
+//     color: textColor,
+//     x: x,
+//     y: y,
+//   };
+
+//   // Push the text element to the textElements array
+//   textElements.push(textElement);
+
+//   // Redraw the canvas with the new text element
+//   drawCanvas();
+// }
+
+
+// // Declare an array to store text elements
+// const textElements = [];
+
+
+// canvas.addEventListener('click', function (event) {
+//   // Get the mouse coordinates relative to the canvas
+//   const rect = canvas.getBoundingClientRect();
+//   currentX = event.clientX;
+//   currentY = event.clientY;
+
+//   // Create a text input element dynamically
+//   const textBox = document.createElement('input');
+//   textBox.type = 'text';
+//   textBox.style.position = 'absolute';
+//   textBox.style.left = currentX + 'px';
+//   textBox.style.top = currentY + 'px';
+//   textBox.id = 'dialogue-text'; // Assign an id
+//   textBox.placeholder = 'Enter text...';
+
+//   // Retrieve user-selected font, font size, and text color
+//   const selectedFont = document.getElementById('font-family').value;
+//   const fontSize = document.getElementById('font-size').value;
+//   const textColor = document.getElementById('text-color').value;
+
+//   // Set the font, font size, and text color to the text box
+//   textBox.style.fontFamily = selectedFont;
+//   textBox.style.fontSize = fontSize + 'px';
+//   textBox.style.color = textColor;
+
+//   // Append the text box to the body
+//   document.body.appendChild(textBox);
+
+//   // Focus on the text box
+//   textBox.focus();
+
+//   // Add an event listener for the text box to handle adding text to the canvas
+//   textBox.addEventListener('blur', function () {
+//     // addTextToCanvas(textBox.value);
+//     addDialogueToCanvas(textBox.value, currentX, currentY, selectedFont, fontSize, textColor);
+//     console.log("Text box will be removed");
+//     // Remove the text box when it loses focus (e.g., when the user is done typing)
+//     // textBox.remove();
+//     // Hide the text box when it loses focus
+//     textBox.style.display = 'none';
+//   });
+// });
+
+
+//moving textbox
+// const addDialogueBtn = document.getElementById('add-dialogue-btn');
+// canvas.addEventListener('click', function (e) {
+//   const x = e.clientX - canvas.getBoundingClientRect().left;
+//   const y = e.clientY - canvas.getBoundingClientRect().top;
+
+//   // Show the input field and button at the clicked location
+//   const inputField = document.getElementById('dialogue-text');
+//   // const addButton = document.getElementById('addDialogueBtn');
+
+//   inputField.style.display = 'block';
+//   addDialogueBtn.style.display = 'block';
+//   inputField.style.left = x + 'px';
+//   inputField.style.top = y + 'px';
+
+//   // Store the clicked location
+//   inputField.dataset.x = x;
+//   inputField.dataset.y = y;
+// });
+
+// let isAddingDialogue = false; // To track the state
+
+// addDialogueBtn.addEventListener('click', function () {
+//   const inputField = document.getElementById('dialogue-text');
+//   // Toggle the state
+//   isAddingDialogue = !isAddingDialogue;
+
+//   if (isAddingDialogue) {
+//     // When "Add Dialogue" is clicked
+//     inputField.style.display = 'none'; // Hide the textarea
+
+//     // Add a click event to specify the position
+//     canvas.addEventListener('click', function (e) {
+//       if (isAddingDialogue) {
+//         const x = e.clientX - canvas.getBoundingClientRect().left;
+//         const y = e.clientY - canvas.getBoundingClientRect().top;
+
+//         // Set the position and dimensions of the textarea
+//         inputField.style.left = x + 'px';
+//         inputField.style.top = y + 'px';
+
+//         // Display the textarea
+//         inputField.style.display = 'block';
+
+//         // Focus on the textarea for text input
+//         inputField.focus();
+//       }
+//     });
+//   } else {
+//     // When "Add Dialogue" is clicked again
+//     inputField.style.display = 'none'; // Hide the textarea
+
+//     // Get the text entered by the user
+//     const text = inputField.value;
+
+//     // Draw the text on the canvas at the specified location
+//     // You can use context.fillText() to do this.
+//     // Also, consider text size, font, and color selection.
+//     // Finally, update the canvas with the new drawing.
+//   }
+// });
+
+// Function to add text to the canvas -- 20 use this
+// function addTextToCanvas(text, currentX, currentY) {
+//   // Set the font and color on the context
+//   context.font = '48px Arial';
+//   context.fillStyle = 'black';
+
+//   // Measure the text size
+//   const textMetrics = context.measureText(text);
+
+//   // Draw the text directly on the canvas at the stored coordinates
+//   context.fillText(text, currentX, currentY);
+
+//   // Save the canvas portion containing the text as an image
+//   const textImage = new Image();
+//   textImage.src = canvas.toDataURL();
+
+//   // Now you have an image representation of the text
+//   // You can add this image to the canvasImages array at the stored coordinates
+//   addImageToCanvasImages(textImage, currentX, currentY, textMetrics.width, 48);
+
+//   // Draw the canvas with the new image
+//   drawCanvas();
+// }
+
+// function addDialogueToCanvas(text, x, y) { --20
+//   // Set the font and color on the context
+//   context.font = `${fontSize}px ${font}`;
+//   context.fillStyle = textColor;
+
+//   // Draw the text directly on the canvas at the specified coordinates
+//   context.fillText(text, x, y);
+// }
+
+
+// function addTextToCanvas(text, x, y) {
+//   const text = dialogueText.value; // Get the text value
+//   const selectedFont = fontDropdown.value; // Get the selected font
+//   const fontSize = document.getElementById('font-size').value; // Get the font size
+//   const textColor = document.getElementById('text-color').value; // Get the text color
+
+//   // Set the font and color on the context
+//   context.font = `${fontSize}px ${selectedFont}`;
+//   context.fillStyle = textColor;
+
+//   // Draw the text directly on the canvas at the provided coordinates
+//   context.fillText(text, x, y);
+  
+//   // Save the canvas portion containing the text as an image
+//   const textImage = new Image();
+//   textImage.src = canvas.toDataURL();
+
+//   // You can add this image to the canvasImages array (if needed)
+//   // addImageToCanvasImages(textImage, x, y, textMetrics.width, fontSize);
+
+//   // Draw the canvas with the new text
+//   drawCanvas();
+// }
+
+//created for text on img 
+// canvas.addEventListener('click', function (event) {
+//   const rect = canvas.getBoundingClientRect();
+//   const currentX = event.clientX - rect.left;
+//   const currentY = event.clientY - rect.top;
+
+//   // Check if the click occurred on an image
+//   let clickedOnImage = false;
+
+//   for (const image of imageObjects) {
+//     if (
+//       currentX >= image.x && currentX <= image.x + image.width &&
+//       currentY >= image.y && currentY <= image.y + image.height
+//     ) {
+//       // A click occurred on this image
+//       addTextToCanvas("Your text here", image.x, image.y);
+//       clickedOnImage = true;
+//       break;
+//     }
+//   }
+
+//   // If not clicked on an image, add text to the canvas background
+//   if (!clickedOnImage) {
+//     addTextToCanvas("Your text here", currentX, currentY);
+//   }
+// });
+
+
+
+// Add a variable to store the current x and y coordinates -- 20 working bessst!
+// let currentX = 0;
+// let currentY = 0;
+
+// // Add an event listener for a click on the canvas -- working without img
+// canvas.addEventListener('click', function (event) {
+//   // Get the mouse coordinates relative to the canvas
+//   const rect = canvas.getBoundingClientRect();
+//   currentX = event.clientX;
+//   currentY = event.clientY;
+
+//   // Create a text input element dynamically
+//   const textBox = document.createElement('input');
+//   textBox.type = 'text';
+//   textBox.style.position = 'absolute';
+//   textBox.style.left = currentX + 'px';
+//   textBox.style.top = currentY + 'px';
+//   textBox.id = 'dialogue-text'; // Assign an id
+//   textBox.placeholder = 'Enter text...';
+
+//   // Append the text box to the body
+//   document.body.appendChild(textBox);
+
+//   // Focus on the text box
+//   textBox.focus();
+
+//   // Add an event listener for the text box to handle adding text to the canvas
+//   textBox.addEventListener('blur', function () {
+//     // addTextToCanvas(textBox.value);
+//     addDialogueToCanvas(textBox.value, currentX, currentY);
+//     console.log("Text box will be removed");
+//     // Remove the text box when it loses focus (e.g., when the user is done typing)
+//     // textBox.remove();
+//     // Hide the text box when it loses focus
+//     textBox.style.display = 'none';
+//   });
+
+// });
+
+//mouse click
+// let clickX, clickY; // Variables to store click coordinates
+
+// // Add an event listener for mouse clicks on the canvas
+// canvas.addEventListener('click', function (e) {
+//   // Retrieve the click coordinates relative to the canvas
+//   clickX = e.clientX - canvas.getBoundingClientRect().left;
+//   clickY = e.clientY - canvas.getBoundingClientRect().top;
+  
+//   if (isAddingDialogue) {
+//     // Set the position and dimensions of the textarea
+//     dialogueText.style.left = clickX + 'px';
+//     dialogueText.style.top = clickY + 'px';
+
+//     // Display the textarea
+//     dialogueText.style.display = 'block';
+
+//     // Focus on the textarea for text input
+//     dialogueText.focus();
+//   }
+// });
+
+// // Function to add dialogue to the canvas as an image
+// function addDialogueToCanvas(text, font = '48px Arial', textColor = 'black') {
+//   // Set the font and color on the context
+//   context.font = font;
+//   context.fillStyle = textColor;
+
+//   // Measure the text size
+//   const textMetrics = context.measureText(text);
+
+//   // Draw the text directly on the canvas at the click coordinates
+//   context.fillText(text, clickX, clickY);
+
+//   // Save the canvas portion containing the text as an image
+//   const textImage = new Image();
+//   textImage.src = canvas.toDataURL();
+
+//   // Now you have an image representation of the text
+//   // You can add this image to the canvasImages array
+//   addImageToCanvasImages(textImage, clickX, clickY, textMetrics.width, parseInt(font, 10));
+
+//   // Draw the canvas with the new image
+//   drawCanvas();
+// }
+
+// draws text as text not img -- 20 use this
 // function drawCanvas() {
 //   // context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -812,136 +1314,52 @@ function initializeAddDialogue() {
 
 // }
 
-// Function to add dialogue to the canvas as an image
-function addDialogueToCanvas(text, font = '48px Arial', textColor = 'black') {
-  // Create an offscreen canvas to render the text
-  const offscreenCanvas = document.createElement('canvas');
-  const offscreenContext = offscreenCanvas.getContext('2d');
-  const x = 50; // X-coordinate
-  const y = 50; // Y-coordinate
+// Function to add dialogue to the canvas as an image -- now
+// function addDialogueToCanvas(text, font = '48px Arial', textColor = 'black', x = 50, y = 50) {
+//   // Set the font and color on the context
+//   context.font = font;
+//   context.fillStyle = textColor;
 
-  // Set the font and color on the offscreen context
-  offscreenContext.font = font;
-  offscreenContext.fillStyle = textColor;
+//   // Measure the text size
+//   const textMetrics = context.measureText(text);
 
-  // Measure the text size
-  const textMetrics = offscreenContext.measureText(text);
-  const textWidth = textMetrics.width;
-  const textHeight = parseInt(font, 10); // Convert font size to an integer for the text height
+//   // Draw the text directly on the canvas
+//   context.fillText(text, x, y);
 
-  // Create an image from the offscreen canvas
-  const textImage = new Image();
+//   // Save the canvas portion containing the text as an image
+//   const textImage = new Image();
+//   textImage.src = canvas.toDataURL();
+//   console.log(textImage);
+//   const link = textImage.src;
+//   console.log(link);
 
-  // When the image is loaded, set the canvas size and draw the text
-  textImage.onload = () => {
-    // Set the canvas size to fit the loaded image
-    offscreenCanvas.width = textImage.width;
-    offscreenCanvas.height = textImage.height;
+//   // Now you have an image representation of the text
+//   // You can add this image to the canvasImages array
+//   addImageToCanvasImages(textImage, x, y, textMetrics.width, parseInt(font, 10));
+//   console.log("Text img added to array",addImageToCanvasImages);
 
-    // Draw the text on the offscreen canvas
-    offscreenContext.drawImage(textImage, 0, 0);
-
-    // Log the image data (URL)
-      console.log("Image data:", textImage.src);
-
-    // Now you have an image representation of the text
-    // You can add this image to the canvasImages array
-    addImageToCanvasImages(textImage, x, y, textImage.width, textImage.height);
-    console.log("Text img added to array");
-
-    // Draw the canvas with the new image
-    drawCanvas();
-  };
-
-  // Set the image source
-  textImage.src = offscreenCanvas.toDataURL();
-}
-
-// Function to draw the canvas including text images
-function drawCanvas() {
-  // Clear the canvas
-  // context.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Redraw all images with their new positions from the canvasImages array
-  for (const imageObject of canvasImages) {
-    context.drawImage(imageObject.element, imageObject.x, imageObject.y, imageObject.width, imageObject.height);
-  }
-}
+//   // Draw the canvas with the new image
+//   drawCanvas();
+// }
 
 
-// Function to fetch and populate Google Fonts in the dropdown
-function populateFontDropdown() {
-  fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBLWzHZ25t8e9odQPCq9F-XqDW4B1hj4Qc')
-      .then(response => response.json())
-      .then(data => {
-          const fonts = data.items;
-          fonts.forEach(font => {
-              const option = document.createElement('option');
-              option.value = font.family;
-              option.textContent = font.family;
-              fontDropdown.appendChild(option);
-          });
-      })
-      .catch(error => console.error('Error fetching fonts:', error));
-}
-
-// Event listener for page load
-window.addEventListener('load', () => {
-  // Call populateFontDropdown when the page loads
-  populateFontDropdown();
-});
-
-// Add this function to update the font of the text area
-function updateTextAreaFont(selectedFont) {
-  const dialogueText = document.getElementById('dialogue-text');
-  dialogueText.style.fontFamily = selectedFont;
-}
-
-// Modify the event listener for the "Add Dialogue" button --> working
-addDialogueBtn.addEventListener('click', () => {
-  console.log('Add Dialogue button clicked');
-  const text = dialogueText.value;
-  const selectedFont = fontDropdown.value; // Get the selected font
-  const fontSize = document.getElementById('font-size').value; // Get the font size
-  const textColor = document.getElementById('text-color').value; // Get the text color
-
-  // Update the canvas text properties
-  updateCanvasTextProperties(selectedFont, fontSize, textColor);
-
-  // Populate textElementsArray with text elements
-  textElementsArray.push({ text: text, x: 50, y: 50, font: selectedFont, fontSize: fontSize, color: textColor });
-  console.log(textElementsArray);
-  addDialogueToCanvas(textImage, selectedFont, fontSize, textColor);
-  console.log(dialogueText.value);
-  drawCanvas(); // Call drawCanvas to update the canvas
-});
-
-// Event listener for the font dropdown to update the text area font dynamically
-fontDropdown.addEventListener('change', () => {
-  const selectedFont = fontDropdown.value;
-  updateTextAreaFont(selectedFont);
-});
-
-// Event listener for the font size input to update the canvas text size dynamically
-document.getElementById('font-size').addEventListener('input', (event) => {
-  const selectedFont = fontDropdown.value;
-  const fontSize = event.target.value;
-  const textColor = document.getElementById('text-color').value;
-  updateCanvasTextProperties(selectedFont, fontSize, textColor);
-});
-
-// Event listener for the text color input to update the canvas text color dynamically
-document.getElementById('text-color').addEventListener('input', (event) => {
-  const selectedFont = fontDropdown.value;
-  const fontSize = document.getElementById('font-size').value;
-  const textColor = event.target.value;
-  updateCanvasTextProperties(selectedFont, fontSize, textColor);
-});
-
-// Add this function to update the font, font size, and text color of the canvas text
-function updateCanvasTextProperties(font, fontSize, color) {
-  context.font = `${fontSize}px ${font}`;
-  context.fillStyle = color;
-}
 
 
+//draw text as img --now
+// function drawCanvas() {
+//   // Clear the canvas
+//   // context.clearRect(0, 0, canvas.width, canvas.height);
+
+//   // Redraw all images with their new positions from the canvasImages array
+//   for (const imageObject of canvasImages) {
+//     context.drawImage(imageObject.element, imageObject.x, imageObject.y, imageObject.width, imageObject.height);
+
+//   }
+  
+//   // Now, draw the textImage (if it exists)
+//   if (textImage) {
+//     context.drawImage(textImage, x, y, textMetrics.width, parseInt(font, 10));
+//     console.log(textImage.src);
+
+//   }
+// }
