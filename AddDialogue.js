@@ -21,40 +21,40 @@ export function initializeAddDialogue() {
 }
 
 //working -- not drag
-// function drawCanvas() {
-//     // Clear the canvas to start with a clean slate
-//     context.clearRect(0, 0, canvas.width, canvas.height);
-
-//     // Draw any text elements on the canvas
-//     for (const textElement of textElementsArray) {
-//         context.font = textElement.font;
-//         context.fillStyle = textElement.color;
-//         context.fillText(textElement.text, textElement.x, textElement.y);
-//         // context.drawImage(textElement.text, textElement.x, textElement.y);
-//         console.log("drawcanvas was called");
-//     }
-// }
-
 function drawCanvas() {
     // Clear the canvas to start with a clean slate
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    // context.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw all elements on the canvas
-
-    // 1. Draw any images
-    // for (const imageObject of canvasImages) {
-    //     context.drawImage(imageObject.element, imageObject.x, imageObject.y, imageObject.width, imageObject.height);
-    // }
-
-    // 2. Draw any text elements
+    // Draw any text elements on the canvas
     for (const textElement of textElementsArray) {
         context.font = textElement.font;
         context.fillStyle = textElement.color;
         context.fillText(textElement.text, textElement.x, textElement.y);
+        // context.drawImage(textElement.text, textElement.x, textElement.y);
+        console.log("drawcanvas was called");
     }
+}
+
+// function drawCanvas() {
+//     // Clear the canvas to start with a clean slate
+//     context.clearRect(0, 0, canvas.width, canvas.height);
+
+//     // Draw all elements on the canvas
+
+//     // 1. Draw any images
+//     // for (const imageObject of canvasImages) {
+//     //     context.drawImage(imageObject.element, imageObject.x, imageObject.y, imageObject.width, imageObject.height);
+//     // }
+
+//     // 2. Draw any text elements
+//     for (const textElement of textElementsArray) {
+//         context.font = textElement.font;
+//         context.fillStyle = textElement.color;
+//         context.fillText(textElement.text, textElement.x, textElement.y);
+//     }
 
     
-}
+// }
 
 
 //trial -- not using
@@ -72,64 +72,64 @@ function drawCanvas() {
 //   }
 
 // Function to add dialogue to the canvas --> working without drag
-// export function addDialogueToCanvas(text, font = '48px Arial') {
-//     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-//     context.font = font; // Set the font (either custom or default)
-//     console.log("the font is",font);
-//     context.fillStyle = 'black'; // Set the text color
-//     context.fillText(text, 50, 50); // Draw the text at specified coordinates // cmnt out for trial
-//     // context.drawImage(textImage, 50, 50); // Adjust the position as needed
-//     console.log("inside function addDialogueToCanvas");
-// }
+export function addDialogueToCanvas(text, font = '48px Arial') {
+    context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    context.font = font; // Set the font (either custom or default)
+    console.log("the font is",font);
+    context.fillStyle = 'black'; // Set the text color
+    context.fillText(text, 50, 50); // Draw the text at specified coordinates // cmnt out for trial
+    // context.drawImage(textImage, 50, 50); // Adjust the position as needed
+    console.log("inside function addDialogueToCanvas");
+}
 
 
 // Function to add dialogue to the canvas as an image
-export function addDialogueToCanvas(text, font = '48px Arial', textColor = 'black') {
-    // Create an offscreen canvas to render the text
-    const offscreenCanvas = document.createElement('canvas');
-    const offscreenContext = offscreenCanvas.getContext('2d');
+// export function addDialogueToCanvas(text, font = '48px Arial', textColor = 'black') {
+//     // Create an offscreen canvas to render the text
+//     const offscreenCanvas = document.createElement('canvas');
+//     const offscreenContext = offscreenCanvas.getContext('2d');
     
-    // Set the font and color on the offscreen context
-    offscreenContext.font = font;
-    offscreenContext.fillStyle = textColor;
+//     // Set the font and color on the offscreen context
+//     offscreenContext.font = font;
+//     offscreenContext.fillStyle = textColor;
 
-    // Measure the text size
-    const textMetrics = offscreenContext.measureText(text);
-    const textWidth = textMetrics.width;
-    const textHeight = parseInt(font, 10); // Convert font size to an integer for the text height
+//     // Measure the text size
+//     const textMetrics = offscreenContext.measureText(text);
+//     const textWidth = textMetrics.width;
+//     const textHeight = parseInt(font, 10); // Convert font size to an integer for the text height
     
-    // Create an image from the offscreen canvas
-    const textImage = new Image();
+//     // Create an image from the offscreen canvas
+//     const textImage = new Image();
 
-    // When the image is loaded, set the canvas size and draw the text
-    textImage.onload = () => {
-        // Set the canvas size to fit the loaded image
-        offscreenCanvas.width = textImage.width;
-        offscreenCanvas.height = textImage.height;
+//     // When the image is loaded, set the canvas size and draw the text
+//     textImage.onload = () => {
+//         // Set the canvas size to fit the loaded image
+//         offscreenCanvas.width = textImage.width;
+//         offscreenCanvas.height = textImage.height;
 
-        // Draw the text on the offscreen canvas
-        offscreenContext.drawImage(textImage, 0, 0);
+//         // Draw the text on the offscreen canvas
+//         offscreenContext.drawImage(textImage, 0, 0);
 
-        // Log the image data (URL)
-        console.log("Image data:", textImage.src);
+//         // Log the image data (URL)
+//         console.log("Image data:", textImage.src);
 
-        // Now you have an image representation of the text
-        // You can draw this image on the main canvas
-        // context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-        context.drawImage(textImage, 50, 50); // Adjust the position as needed
-    };
+//         // Now you have an image representation of the text
+//         // You can draw this image on the main canvas
+//         // context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+//         context.drawImage(textImage, 50, 50); // Adjust the position as needed
+//     };
 
-    // Set the image source
-    textImage.src = offscreenCanvas.toDataURL();
+//     // Set the image source
+//     textImage.src = offscreenCanvas.toDataURL();
 
-    console.log(`Offscreen canvas created: ${offscreenCanvas}`);
-    console.log(`Offscreen canvas size set: ${offscreenCanvas.width} ${offscreenCanvas.height}`);
-    console.log('Text drawn on offscreen canvas');
+//     console.log(`Offscreen canvas created: ${offscreenCanvas}`);
+//     console.log(`Offscreen canvas size set: ${offscreenCanvas.width} ${offscreenCanvas.height}`);
+//     console.log('Text drawn on offscreen canvas');
 
-    // You can add this image to the canvasImages array
-  addImageToCanvasImages(textImage, 50, 50);
+//     // You can add this image to the canvasImages array
+//   addImageToCanvasImages(textImage, 50, 50);
 
-}
+// }
 
 
 // Function to fetch and populate Google Fonts in the dropdown
