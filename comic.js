@@ -886,7 +886,7 @@ canvas.addEventListener('click', function (event) {
 
 function drawCanvas() {
   // Clear the canvas
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  // context.clearRect(0, 0, canvas.width, canvas.height);
 
   // Redraw all text elements on the canvas
   for (const textElement of textElements) {
